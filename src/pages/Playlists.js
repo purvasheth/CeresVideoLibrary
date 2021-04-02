@@ -1,12 +1,13 @@
 import { Fragment } from "react";
-import { Thumbnail } from "../components/Thumbnail";
 import { usePlaylists } from "./playlists-context";
 import {
   DELETE_PLAYLIST,
   REMOVE_VIDEO_FROM_PLAYLIST,
 } from "./playlists-reducer";
 import { CloseButton } from "../components/CloseButton";
+import { BaseCard } from "../components/BaseCard";
 
+// TODO: more refactoring + edit name and delete with icons and modal
 export function Playlists() {
   const { playlists, playlistsDispatch } = usePlaylists();
   const deletePlaylist = (id) => {
@@ -21,7 +22,7 @@ export function Playlists() {
   };
   return (
     <div className="container">
-      <h1>Playlists</h1>
+      <h1>My Playlists</h1>
       {playlists.map(({ id, name, videos }) => (
         <Fragment key={id}>
           <div className="flex justify-between align-center">
@@ -34,30 +35,15 @@ export function Playlists() {
             </button>
           </div>
           <div className="flex">
-            {videos.map(({ name, avatarSrc, uploadedBy, id: videoId }) => {
+            {videos.map(({ id: videoId, ...rest }) => {
               return (
-                <div key={videoId} className="card card--shadow m-1">
+                <BaseCard id={videoId} {...rest}>
                   <CloseButton
                     onClick={() => {
                       removeVideoFromPlaylist({ videoId, playlistId: id });
                     }}
                   />
-                  <Thumbnail id={videoId} />
-                  <div className="p-1">
-                    <div className="flex flex-no-wrap">
-                      <div
-                        className="card__avatar"
-                        style={{
-                          backgroundImage: `url('${avatarSrc}')`,
-                        }}
-                      />
-                      <div>
-                        <div className="card__title">{name}</div>
-                        <div className="mt-1">{uploadedBy}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </BaseCard>
               );
             })}
             {videos.length === 0 && "No videos added to this playlist"}
