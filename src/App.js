@@ -6,8 +6,6 @@ import { Routes, Route } from "react-router-dom";
 import { NavigationBar } from "./components/NavigationBar";
 
 export default function App() {
-  // const [routewithProps, setRouteWithProps] = useState({route:"videos",props:{}});
-  // const {route,props} = routewithProps;
   return (
     <div>
       <NavigationBar />
@@ -19,31 +17,3 @@ export default function App() {
     </div>
   );
 }
-
-// <nav>
-//   <ul>
-//     <li class="inline">
-//       <NavLink to="/" end activeClassName="selected">
-//         Home
-//       </NavLink>{" "}
-//       |
-//     </li>
-//     <li class="inline">
-//       <NavLink to="playlists" end activeClascbsName="selected">
-//         Playlists
-//       </NavLink>{" "}
-//       |
-//     </li>
-//     <li class="inline">
-//       <NavLink to="playlists/liked-videos" activeClassName="selected">
-//         Liked Videos
-//       </NavLink>{" "}
-//       |
-//     </li>
-//     <li class="inline">
-//       <NavLink to="playlists/watch-later" activeClassName="selected">
-//         Watch Later
-//       </NavLink>
-//     </li>
-//   </ul>
-// </nav>
