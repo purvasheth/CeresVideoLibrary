@@ -2,39 +2,70 @@ import { useState } from "react";
 import { usePlaylists } from "./playlists-context";
 import { BaseCard } from "../components/BaseCard";
 import { PlaylistModal, SaveModalButton } from "../components/PlaylistModal";
+import { CloseButton } from "../components/CloseButton";
+import { REMOVE_FROM_GENERIC_ARRAY } from "./generic-reducer";
+import { useParams } from "react-router";
 
-// shamelessly copied from
-// https://stackoverflow.com/questions/7225407/convert-camelcasetext-to-sentence-case-text
-const camel2title = (camelCase) =>
-  camelCase
-    .replace(/([A-Z])/g, (match) => ` ${match}`)
-    .replace(/^./, (match) => match.toUpperCase())
-    .trim();
+const transformText = ({ type, text }) => {
+  console.clear();
+  console.log(text);
+  const textArray = text
+    .split("-")
+    .map((word) => word[0].toUpperCase() + word.slice(1));
 
-//  TODO: add delete using close button
-export function GenericListing({ listingName }) {
-  console.log(listingName);
+  switch (type) {
+    case "camelCase":
+      const camelCase = textArray.join("");
+      return camelCase[0].toLowerCase() + camelCase.slice(1);
+    case "titleCase":
+      return textArray.join(" ");
+    default:
+      return textArray.join("");
+  }
+};
+
+export function GenericListing() {
+  const { playlistName } = useParams();
   const {
-    [listingName]: genericArray,
-    [`${listingName}Dispatch`]: genericDispatch,
+    [transformText({ type: "camelCase", text: playlistName })]: genericArray,
+    [`${transformText({
+      type: "camelCase",
+      text: playlistName,
+    })}Dispatch`]: genericDispatch,
   } = usePlaylists();
+
+  const removeVideo = (video) => {
+    genericDispatch({
+      type: REMOVE_FROM_GENERIC_ARRAY,
+      arrayName: playlistName,
+      video,
+    });
+  };
+
   return (
     <div className="container">
-      <h1>{camel2title(listingName)}</h1>
+      <h1>{transformText({ type: "titleCase", text: playlistName })}</h1>
       <div className="flex">
-        {genericArray.map(({ id, ...rest }) => {
-          return <GenericListingCard key={id} id={id} {...rest} />;
+        {genericArray.map((video) => {
+          return (
+            <GenericListingCard
+              key={video.id}
+              video={video}
+              removeVideo={removeVideo}
+            />
+          );
         })}
       </div>
     </div>
   );
 }
 
-function GenericListingCard(video) {
+function GenericListingCard({ video, removeVideo }) {
   const [showSaveModal, setShowSaveModal] = useState(false);
   return (
     <BaseCard {...video}>
-      <div className="pl-5 pb-1">
+      <CloseButton onClick={() => removeVideo(video)} />
+      <div className="pl-4 pb-1">
         <SaveModalButton setShowSaveModal={setShowSaveModal} />
       </div>
       <PlaylistModal

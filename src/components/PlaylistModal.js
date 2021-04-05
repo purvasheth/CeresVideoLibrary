@@ -9,6 +9,7 @@ import {
 import { usePlaylists } from "../pages/playlists-context";
 import { isPresentInArray } from "../pages/VideoListing";
 
+// TODO: add better styling for this modal
 export function PlaylistModal({ video, showSaveModal, setShowSaveModal }) {
   return (
     <Modal
@@ -54,10 +55,10 @@ function PlaylistCheckBox({ playlistId, video, name, videos }) {
     checked
       ? playlistsDispatch({ type: ADD_VIDEO_TO_PLAYLIST, playlistId, video })
       : playlistsDispatch({
-          type: REMOVE_VIDEO_FROM_PLAYLIST,
-          playlistId,
-          videoId: video.id,
-        });
+        type: REMOVE_VIDEO_FROM_PLAYLIST,
+        playlistId,
+        videoId: video.id,
+      });
     setIsInPlaylist((prev) => !prev);
   };
   return (
@@ -127,8 +128,11 @@ function ToggleCreatePlaylistLabel({ showNameInput, setShowNameInput }) {
 }
 export function SaveModalButton({ setShowSaveModal }) {
   return (
-    <button className="btn bg-primary" onClick={() => setShowSaveModal(true)}>
-      Save to Playlist
+    <button
+      className="btn bg-primary ml-1"
+      onClick={() => setShowSaveModal(true)}
+    >
+      SAVE
     </button>
   );
 }

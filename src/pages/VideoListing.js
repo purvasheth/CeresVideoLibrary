@@ -43,11 +43,7 @@ function VideoCard(video) {
 }
 
 function VideoCardFooter({ children }) {
-  return (
-    <div className="flex justify-between align-baseline pb-1 pl-1 pr-1">
-      {children}
-    </div>
-  );
+  return <div className="flex align-baseline pb-1 pl-1 pr-1">{children}</div>;
 }
 
 function ToggleIconGroup({ video }) {
