@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
-import { playlistsReducer, initialPlaylists } from "./playlists-reducer";
-import { genericReducer, initialGenericArray } from "./generic-reducer";
+import { playlistsReducer } from "./playlists-reducer";
+import { genericReducer } from "./generic-reducer";
 
 const PlaylistsContext = createContext({});
 
@@ -14,6 +14,9 @@ export const PlaylistsProvider = ({ children }) => {
   const [{ likedVideos }, likedVideosDispatch] = useReducer(genericReducer, {
     likedVideos: [],
   });
+  const [{ history }, historyDispatch] = useReducer(genericReducer, {
+    history: [],
+  });
   return (
     <PlaylistsContext.Provider
       value={{
@@ -23,6 +26,8 @@ export const PlaylistsProvider = ({ children }) => {
         watchLaterDispatch,
         likedVideos,
         likedVideosDispatch,
+        history,
+        historyDispatch,
       }}
     >
       {children}

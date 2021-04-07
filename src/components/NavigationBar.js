@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { usePlaylists } from "../pages/playlists-context";
 
 export function NavigationBar() {
   const [expandNavbar, setExpandNavbar] = useState(false);
@@ -17,6 +18,7 @@ export function NavigationBar() {
 }
 
 function Navigation({ expandNavbar }) {
+  const { watchLater } = usePlaylists();
   return (
     <nav className={`nav ${expandNavbar ? "" : "nav-hide"}`}>
       {/* TODO: Add search functionality */}
@@ -26,13 +28,13 @@ function Navigation({ expandNavbar }) {
       <ul className="nav__list nav__list--primary">
         <NavigationItem route="/">Home</NavigationItem>
         <NavigationItem route="playlists">Playlists</NavigationItem>
+        <NavigationItem route="playlists/history">History</NavigationItem>
         <NavigationItem route="playlists/watch-later">
           Watch Later
-          {/* <NotificationBadge length={watchLater.length} /> */}
+          <NotificationBadge length={watchLater.length} />
         </NavigationItem>
         <NavigationItem route="playlists/liked-videos">
           Liked Videos
-          {/* <NotificationBadge length={likedVideos.length} /> */}
         </NavigationItem>
       </ul>
     </nav>
