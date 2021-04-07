@@ -4,6 +4,7 @@ import { Playlists } from "./pages/Playlists";
 import { GenericListing } from "./pages/GenericListing";
 import { Routes, Route } from "react-router-dom";
 import { NavigationBar } from "./components/NavigationBar";
+import { VideoDetail } from "./pages/VideoDetail";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/" element={<VideoListing />} />
         <Route path="/playlists" element={<Playlists />} />
         <Route path="/playlists/:playlistName" element={<GenericListing />} />
+        <Route path="/:videoId" element={<VideoDetail />} />
       </Routes>
     </div>
   );

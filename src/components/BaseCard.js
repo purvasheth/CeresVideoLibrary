@@ -1,9 +1,16 @@
 import { Thumbnail } from "./Thumbnail";
+import { useNavigate } from "react-router-dom";
 
 export function BaseCard({ children, id, avatarSrc, ...rest }) {
+  const navigate = useNavigate();
+  const openVideo = (e) => {
+    navigate(`/${id}`)
+    e.stopPropagation();
+  }
+
   return (
     <div key={id} className="card card--shadow m-1">
-      <Thumbnail id={id} />
+      <Thumbnail onClick={openVideo} id={id} className="clickable" />
       <div className="flex flex-no-wrap p-1">
         <Avatar avatarSrc={avatarSrc} />
         <CardDetails {...rest} />
@@ -12,7 +19,7 @@ export function BaseCard({ children, id, avatarSrc, ...rest }) {
     </div>
   );
 }
-function Avatar({ avatarSrc }) {
+export function Avatar({ avatarSrc }) {
   return (
     <div
       className="card__avatar"

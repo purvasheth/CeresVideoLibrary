@@ -7,8 +7,6 @@ import { REMOVE_FROM_GENERIC_ARRAY } from "./generic-reducer";
 import { useParams } from "react-router";
 
 const transformText = ({ type, text }) => {
-  console.clear();
-  console.log(text);
   const textArray = text
     .split("-")
     .map((word) => word[0].toUpperCase() + word.slice(1));
@@ -26,19 +24,14 @@ const transformText = ({ type, text }) => {
 
 export function GenericListing() {
   const { playlistName } = useParams();
-  const {
-    [transformText({ type: "camelCase", text: playlistName })]: genericArray,
-    [`${transformText({
-      type: "camelCase",
-      text: playlistName,
-    })}Dispatch`]: genericDispatch,
-  } = usePlaylists();
+  const arrayName = transformText({ type: "camelCase", text: playlistName });
+  const { [arrayName]: genericArray, [`${arrayName}Dispatch`]: genericDispatch } = usePlaylists();
 
   const removeVideo = (video) => {
     genericDispatch({
       type: REMOVE_FROM_GENERIC_ARRAY,
-      arrayName: playlistName,
-      video,
+      arrayName,
+      video
     });
   };
 

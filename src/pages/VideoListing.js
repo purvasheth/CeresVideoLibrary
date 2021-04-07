@@ -42,21 +42,21 @@ function VideoCard(video) {
   );
 }
 
-function VideoCardFooter({ children }) {
-  return <div className="flex align-baseline pb-1 pl-1 pr-1">{children}</div>;
+export function VideoCardFooter({ children }) {
+  return <div className="flex align-center pb-1 pl-1 pr-1">{children}</div>;
 }
 
-function ToggleIconGroup({ video }) {
+export function ToggleIconGroup({ video }) {
   const { watchLater, likedVideos } = usePlaylists();
   return (
     <>
-      <ToggleIcon array={watchLater} arrayName="watchLater" video={video} />
       <ToggleIcon array={likedVideos} arrayName="likedVideos" video={video} />
+      <ToggleIcon array={watchLater} arrayName="watchLater" video={video} />
     </>
   );
 }
 
-function ToggleIcon({ array, arrayName, video }) {
+export function ToggleIcon({ array, arrayName, video }) {
   const { watchLaterDispatch, likedVideosDispatch } = usePlaylists();
 
   const getCardIconsClass = (array, id) => {
