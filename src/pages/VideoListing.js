@@ -1,4 +1,3 @@
-import { data } from "../data";
 import { useState } from "react";
 import {
   ADD_TO_GENERIC_ARRAY,
@@ -7,16 +6,18 @@ import {
 import { usePlaylists } from "./playlists-context";
 import { BaseCard } from "../components/BaseCard";
 import { SaveModalButton, PlaylistModal } from "../components/PlaylistModal";
+import { useVideos } from "./videos-context";
 
 export const isPresentInArray = (array, id) =>
   array.find((video) => video.id === id);
 
 export function VideoListing() {
+  const { videos } = useVideos();
   return (
     <div className="container">
       <h1>Video Listing</h1>
       <div className="flex">
-        {data.map(({ id, ...rest }) => {
+        {videos.map(({ id, ...rest }) => {
           return <VideoCard key={id} id={id} {...rest} />;
         })}
       </div>

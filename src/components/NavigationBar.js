@@ -18,7 +18,6 @@ export function NavigationBar() {
 }
 
 function Navigation({ expandNavbar }) {
-  const { watchLater } = usePlaylists();
   return (
     <nav className={`nav ${expandNavbar ? "" : "nav-hide"}`}>
       {/* TODO: Add search functionality */}
@@ -31,23 +30,12 @@ function Navigation({ expandNavbar }) {
         <NavigationItem route="playlists/history">History</NavigationItem>
         <NavigationItem route="playlists/watch-later">
           Watch Later
-          <NotificationBadge length={watchLater.length} />
         </NavigationItem>
         <NavigationItem route="playlists/liked-videos">
           Liked Videos
         </NavigationItem>
       </ul>
     </nav>
-  );
-}
-
-function NotificationBadge({ length }) {
-  return (
-    length !== 0 && (
-      <span className="badge--smaller position-badge--smaller bg-red-600">
-        {length}
-      </span>
-    )
   );
 }
 

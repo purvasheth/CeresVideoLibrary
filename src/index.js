@@ -4,14 +4,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import App from "./App";
 import { PlaylistsProvider } from "./pages/playlists-context";
+import { VideoProvider } from "./pages/videos-context";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
     <PlaylistsProvider>
-      <Router>
-        <App />
-      </Router>
+      <VideoProvider>
+        <Router>
+          <App />
+        </Router>
+      </VideoProvider>
     </PlaylistsProvider>
   </StrictMode>,
   rootElement
