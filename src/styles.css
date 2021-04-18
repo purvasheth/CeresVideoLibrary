@@ -63,6 +63,10 @@
   width: 100%;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 /***************** Thumnail img ***************/
 figure.fixedratio {
   padding-top: 56.25%;
@@ -89,7 +93,8 @@ figure.fixedratio {
   height: 100%;
 }
 
-/************ video listing card **************/
+/************ video listing **************/
+
 .card {
   min-width: var(--min-width);
   cursor: pointer;

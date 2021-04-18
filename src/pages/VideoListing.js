@@ -7,21 +7,51 @@ import { usePlaylists } from "./playlists-context";
 import { BaseCard } from "../components/BaseCard";
 import { SaveModalButton, PlaylistModal } from "../components/PlaylistModal";
 import { useVideos } from "./videos-context";
+import { categories } from "../data";
 
 export const isPresentInArray = (array, id) =>
   array.find((video) => video.id === id);
 
 export function VideoListing() {
   const { videos } = useVideos();
+  const [activeCategory, setActiveCategory] = useState("All");
   return (
     <div className="container">
       <h1>Video Listing</h1>
       <div className="flex">
-        {videos.map(({ id, ...rest }) => {
-          return <VideoCard key={id} id={id} {...rest} />;
-        })}
+        {categories.map(({ name, id }) => (
+          <CategoryBadge
+            key={id}
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+            category={name}
+          />
+        ))}
+      </div>
+      <div className="flex">
+        {videos
+          .filter(
+            ({ category }) =>
+              activeCategory === "All" || activeCategory === category
+          )
+          .map(({ id, ...rest }) => {
+            return <VideoCard key={id} id={id} {...rest} />;
+          })}
       </div>
     </div>
+  );
+}
+
+function CategoryBadge({ activeCategory, setActiveCategory, category }) {
+  return (
+    <span
+      class={`badge--regular m-1 clickable ${
+        activeCategory === category ? "bg-primary" : "bg-primary-200"
+      }`}
+      onClick={() => setActiveCategory(category)}
+    >
+      {category}
+    </span>
   );
 }
 
@@ -68,11 +98,7 @@ export function ToggleIcon({ array, arrayName, video }) {
   const toggleGenericArray = ({ arrayName, video, array }) => {
     let type = ADD_TO_GENERIC_ARRAY;
     if (isPresentInArray(array, video.id)) type = REMOVE_FROM_GENERIC_ARRAY;
-    const dispatchArgs = {
-      type,
-      arrayName,
-      video,
-    };
+    const dispatchArgs = { type, arrayName, video };
     arrayName === "likedVideos"
       ? likedVideosDispatch(dispatchArgs)
       : watchLaterDispatch(dispatchArgs);

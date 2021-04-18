@@ -1,10 +1,35 @@
-// {
-//   id:"",
-//   name:"",
-//   uploadedBy:"",
-//   avatarSrc:"",
-//   finalNotes:"",
-// }
+import uuid from "react-uuid";
+
+export const categories = [
+  {
+    id: uuid(),
+    name: "All",
+  },
+  {
+    id: uuid(),
+    name: "Cakes",
+  },
+  {
+    id: uuid(),
+    name: "Chocolates",
+  },
+  {
+    id: uuid(),
+    name: "Cupcakes",
+  },
+  {
+    id: uuid(),
+    name: "Cookies",
+  },
+  {
+    id: uuid(),
+    name: "Pies",
+  },
+  {
+    id: uuid(),
+    name: "Others",
+  },
+];
 export const data = [
   {
     id: "3tOr4F7hJiM",
@@ -47,17 +72,8 @@ export const data = [
   },
 
   {
-    id: "ZPQ8-bHCywI",
-    category: "Chocolates",
-    name: "Chocolate Bark with Sundried Fruits and Nuts | ASMR",
-    uploadedBy: "Cookntell Kitchen",
-    avatarSrc:
-      "https://yt3.ggpht.com/ytc/AAUvwnjCAcWPw3ix9Rlqn1BfHG2OaQb5vLwzVN_LD-SRfg=s88-c-k-c0x00ffffff-no-rj",
-    finalNotes: "",
-  },
-  {
     id: "y4hw3veqWGk",
-    category: "cookies",
+    category: "Cookies",
     name:
       "Eggless Chocolate Chip Cookies | The Only Cookie Recipe you Need | Bake With Shivesh",
     uploadedBy: "Bake With Shivesh",
@@ -67,7 +83,7 @@ export const data = [
   },
   {
     id: "tgFQX8CVbh0",
-    category: "cookies",
+    category: "Cookies",
     name: "Mini Milk Cookies | Eggless & Without Oven | Yummy",
     uploadedBy: "Yummy",
     avatarSrc:
@@ -76,7 +92,7 @@ export const data = [
   },
   {
     id: "jVI2eNW5iuM",
-    category: "cookies",
+    category: "Cookies",
     name: "3-Ingredient Butter Cookies Recipe",
     uploadedBy: "The Cooking Foodie",
     avatarSrc:
@@ -85,7 +101,7 @@ export const data = [
   },
   {
     id: "duBwUH5S65c",
-    category: "cookies",
+    category: "Cookies",
     name:
       "Nankhatai Recipe - Easy Eggless Nan khatai Biscuit | Indian Cookies | Indian Bakery Recipes",
     uploadedBy: "CookingShooking",
@@ -95,7 +111,7 @@ export const data = [
   },
   {
     id: "o9C1TR5I8YA",
-    category: "cookies",
+    category: "Cookies",
     name: "Red Velvet New York Cookie Recipe! | Cupcake Jemma",
     uploadedBy: "CupcakeJemma",
     avatarSrc:
@@ -104,7 +120,7 @@ export const data = [
   },
   {
     id: "POk4F1X8TNQ",
-    category: "cookies",
+    category: "Cookies",
     name: "Chocolate Fudge Cookies Recipe Demonstration - Joyofbaking.com",
     uploadedBy: "Joy of Baking",
     avatarSrc:
@@ -113,7 +129,7 @@ export const data = [
   },
   {
     id: "qtlhdIfojmc",
-    category: "cakes",
+    category: "Cakes",
     name: "Classic Vanilla Cake Recipe | How to Make Birthday Cake",
     uploadedBy: "The Cooking Foodie",
     avatarSrc:
@@ -122,7 +138,7 @@ export const data = [
   },
   {
     id: "ED-SdFlVYoc",
-    category: "cakes",
+    category: "Cakes",
     name: "Basic Sponge Cake Base Recipe | HappyFoods",
     uploadedBy: "Happy Foods Tube",
     avatarSrc:
@@ -131,7 +147,7 @@ export const data = [
   },
   {
     id: "dsJtgmAhFF4",
-    category: "cakes",
+    category: "Cakes",
     name: "How to Make the Most Amazing Chocolate Cake",
     uploadedBy: "The Stay At Home Chef",
     avatarSrc:
@@ -140,7 +156,7 @@ export const data = [
   },
   {
     id: "LP3uVB8V0Bw",
-    category: "cakes",
+    category: "Cakes",
     name: "Chocolate Cake Recipe Easy-From Scratch by (HUMA IN THE KITCHEN)",
     uploadedBy: "Huma in the kitchen",
     avatarSrc:
@@ -149,7 +165,7 @@ export const data = [
   },
   {
     id: "zixzwT4ZtuQ",
-    category: "cakes",
+    category: "Cakes",
     name: "Oreo Cake in Pressure Cooker | Chocolate Oreo Cake |",
     uploadedBy: "Selines Recipes",
     avatarSrc:
@@ -158,7 +174,7 @@ export const data = [
   },
   {
     id: "YD113UZf3lc",
-    category: "cakes",
+    category: "Cakes",
     name:
       "Eggless Lemon Cake Recipe Without Oven | No Oven Lemon Cake Recipe ~ The Terrace Kitchen",
     uploadedBy: "The Terrace Kitchen",
@@ -168,7 +184,7 @@ export const data = [
   },
   {
     id: "zxbg_stEfew",
-    category: "cakes",
+    category: "Cakes",
     name:
       "Marble Cake Recipe | Zebra Cake In Lock-Down | Eggless & Without Oven | Yummy",
     uploadedBy: "Yummy",
@@ -178,7 +194,7 @@ export const data = [
   },
   {
     id: "KUFAXfyQo6s",
-    category: "cakes",
+    category: "Cakes",
     name: "Pineapple Upside Down Cake Simple and Easy",
     uploadedBy: "TheCooknShare",
     avatarSrc:
@@ -187,7 +203,7 @@ export const data = [
   },
   {
     id: "At4GymbpiSU",
-    category: "cakes",
+    category: "Cakes",
     name: "RED VELVET CAKE RECIPE with Cream Cheese Frosting",
     uploadedBy: "Natashas Kitchen",
     avatarSrc:
@@ -195,17 +211,8 @@ export const data = [
     finalNotes: "",
   },
   {
-    id: "JqY0XtkkUE",
-    category: "cakes",
-    name: "Only 5 ingredients, Chocolate Cake Bars Without an Oven",
-    uploadedBy: "Vinastar Channel",
-    avatarSrc:
-      "https://yt3.ggpht.com/ytc/AAUvwnicxgOuCGWB0ZtXITtkammCNXIBfYBmSWyLKZaaeg=s88-c-k-c0x00ffffff-no-rj",
-    finalNotes: "",
-  },
-  {
     id: "hqqXCUqZHXo",
-    category: "cakes",
+    category: "Cakes",
     name: "Mirror Glaze Brownie Mousse Cake",
     uploadedBy: "Gracious Treatz",
     avatarSrc:
@@ -214,7 +221,7 @@ export const data = [
   },
   {
     id: "YP8a6ugKQ6Y",
-    category: "cupcakes",
+    category: "Cupcakes",
     name:
       "Perfect Vanilla Cupcakes/How to make moist vanilla cupcakes/ Classic cupcakes",
     uploadedBy: "The cookbook",
@@ -224,7 +231,7 @@ export const data = [
   },
   {
     id: "demCt-E4-NM",
-    category: "cupcakes",
+    category: "Cupcakes",
     name: "Chocolate Cupcakes Recipe | How to Make Chocolate Cupcakes",
     uploadedBy: "The Cooking Foodie",
     avatarSrc:
@@ -233,7 +240,7 @@ export const data = [
   },
   {
     id: "PGagpqlrpuw",
-    category: "cupcakes",
+    category: "Cupcakes",
     name: "Red Velvet Cup Cake | Eggless & Without Oven | Yummy",
     uploadedBy: "Yummy",
     avatarSrc:
@@ -242,7 +249,7 @@ export const data = [
   },
   {
     id: "uWj6BC0IV-Q",
-    category: "cupcakes",
+    category: "Cupcakes",
     name:
       "Amazing Cupcake Decorating Ideas Compilation For Party | Perfect Cake Tutorials | Tasty Plus Cake",
     uploadedBy: "Tasty Plus",
@@ -252,7 +259,7 @@ export const data = [
   },
   {
     id: "UXGQXDkAoac",
-    category: "cupcakes",
+    category: "Cupcakes",
     name:
       "Crazy Cupcakes: One Easy Cupcake Recipe with Endless Flavor Variations!",
     uploadedBy: "Bigger Bolder Baking",
@@ -262,7 +269,7 @@ export const data = [
   },
   {
     id: "I3q_7gbZ9FI",
-    category: "cupcakes",
+    category: "Cupcakes",
     name:
       "CHOCOLATE TRUFFLE CUPCAKES RECIPE | Easy DIY Fluffy Chocolate Cake | Yummy Dessert | Baking Cherry",
     uploadedBy: "Baking Cherry",
@@ -272,7 +279,7 @@ export const data = [
   },
   {
     id: "KbyahTnzbKA",
-    category: "pies",
+    category: "Pies",
     name: "The Only APPLE PIE Recipe You'll Need",
     uploadedBy: "Natashas Kitchen",
     avatarSrc:
@@ -281,7 +288,7 @@ export const data = [
   },
   {
     id: "_Q0FYoCl4Cs",
-    category: "pies",
+    category: "Pies",
     name: "How To Make Homemade Cinnamon Rolls • Tasty",
     uploadedBy: "Tasty",
     avatarSrc:
@@ -290,7 +297,7 @@ export const data = [
   },
   {
     id: "XTdkwo9V1Jo",
-    category: "pies",
+    category: "Pies",
     name: "How to Make the Best Homemade Orange Rolls",
     uploadedBy: "The Stay At Home Chef",
     avatarSrc:
@@ -299,7 +306,7 @@ export const data = [
   },
   {
     id: "Bt1MH-MlDwA",
-    category: "pies",
+    category: "Pies",
     name: "How to Make a Chocolate Pie",
     uploadedBy: "Preppy Kitchen",
     avatarSrc:
@@ -308,7 +315,7 @@ export const data = [
   },
   {
     id: "-uzVoN4SBf4",
-    category: "pies",
+    category: "Pies",
     name: "How To Make The Ultimate Blueberry Pie Recipe + Flaky Crust",
     uploadedBy: "Natashas Kitchen",
     avatarSrc:
@@ -317,7 +324,7 @@ export const data = [
   },
   {
     id: "hPkYmHUh34I",
-    category: "others",
+    category: "Others",
     name:
       "How To Start Baking? An introduction to baking| Cakes And More |Baking For Beginners",
     uploadedBy: "Cakes And More! Baking For Beginners",
@@ -327,7 +334,7 @@ export const data = [
   },
   {
     id: "BVNhJXa5W74",
-    category: "others",
+    category: "Others",
     name: "How To Make Scones | Jamie Oliver | AD",
     uploadedBy: "Jamie Oliver",
     avatarSrc:
@@ -336,7 +343,7 @@ export const data = [
   },
   {
     id: "K689erbK3XI",
-    category: "others",
+    category: "Others",
     name: "Professional Baker Teaches You How To Make CROISSANTS!",
     uploadedBy: "Oh Yum with Anna Olson",
     avatarSrc:
@@ -345,7 +352,7 @@ export const data = [
   },
   {
     id: "JD3BT8rUGIg",
-    category: "others",
+    category: "Others",
     name:
       "Eggless Donuts Recipe | Step by Step Process to Make Fluffy Donuts ~ The Terrace Kitchen",
     uploadedBy: "The Terrace Kitchen",
@@ -355,7 +362,7 @@ export const data = [
   },
   {
     id: "mUyQLBCaobE",
-    category: "others",
+    category: "Others",
     name: "Individual Chocolate Tarts | Gordon Ramsay",
     uploadedBy: "Gordon Ramsay",
     avatarSrc:
@@ -364,7 +371,7 @@ export const data = [
   },
   {
     id: "R-PcSysotd8",
-    category: "others",
+    category: "Others",
     name: "Cream Tart",
     uploadedBy: "Home Cooking Adventure",
     avatarSrc:
@@ -373,7 +380,7 @@ export const data = [
   },
   {
     id: "5zgfdImm_VA",
-    category: "others",
+    category: "Others",
     name: "Complete Guide to Making Macarons | Macaron Recipe",
     uploadedBy: "Preppy Kitchen",
     avatarSrc:
