@@ -31,7 +31,7 @@ export function VideoDetail() {
 
   return (
     <div className="container flex width-full">
-      <div className="container--video flex-grow">
+      <div className="container--video">
         <Iframe id={videoId} />
         <div>
           <div className="flex">
@@ -53,8 +53,8 @@ export function VideoDetail() {
             />
           </div>
         </div>
+        <Notes id={id} finalNotes={finalNotes} />
       </div>
-      <Notes id={id} finalNotes={finalNotes} />
     </div>
   );
 }

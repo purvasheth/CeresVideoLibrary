@@ -5,7 +5,7 @@ import { UPDATE_NOTES } from "./videos-reducer";
 
 export function Notes({ id, finalNotes }) {
   const [isEditable, setIsEditable] = useState(false);
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState(finalNotes);
   const { videosDispatch } = useVideos();
 
   const onSaveClick = () => {
@@ -18,31 +18,32 @@ export function Notes({ id, finalNotes }) {
   };
   return (
     <div className="video__notes p-1">
-      <h2 className="font--center">Notes (using markdown)</h2>
-      {isEditable ? (
-        <div className="align-end">
+      <h2 className="flex justify-between">
+        Add Notes using markdown
+        {isEditable ? (
+          <div className="">
+            <button
+              className="btn btn--icon btn--success playlist__icon"
+              onClick={onSaveClick}
+            >
+              <i class="fas fa-check" />
+            </button>
+            <button
+              className="btn btn--icon btn--warning playlist__icon"
+              onClick={onCancelClick}
+            >
+              <i class="fas fa-times" />
+            </button>
+          </div>
+        ) : (
           <button
-            className="btn btn--icon btn--success playlist__icon"
-            onClick={onSaveClick}
+            className="btn btn--icon font--primary playlist__icon"
+            onClick={() => setIsEditable(true)}
           >
-            <i class="fas fa-check" />
+            <i class="fas fa-pen" />
           </button>
-          <button
-            className="btn btn--icon btn--warning playlist__icon"
-            onClick={onCancelClick}
-          >
-            <i class="fas fa-times" />
-          </button>
-        </div>
-      ) : (
-        <button
-          className="btn btn--icon font--primary playlist__icon align-end"
-          onClick={() => setIsEditable(true)}
-        >
-          <i class="fas fa-pen" />
-        </button>
-      )}
-
+        )}
+      </h2>
       {isEditable ? (
         <textarea
           className="ta--notes"
