@@ -32,12 +32,12 @@ export function VideoDetail() {
   return (
     <div className="container flex width-full">
       <div className="container--video">
+        <h2 className="video__title">{name}</h2>
         <Iframe id={videoId} />
         <div>
           <div className="flex">
-            <h3 className="video__title">{name}</h3>
             <div className="video__info">
-              <div className="flex align-center justify-center flex-grow">
+              <div className="flex align-center justify-center flex-grow pt-sm">
                 <ToggleIconGroup video={video} />
                 <SaveModalButton setShowSaveModal={setShowSaveModal} />
               </div>

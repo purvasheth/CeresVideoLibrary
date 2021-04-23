@@ -67,6 +67,10 @@
   cursor: pointer;
 }
 
+.pt-sm {
+  padding-top: 0.5rem;
+}
+
 /***************** Thumnail img ***************/
 figure.fixedratio {
   padding-top: 56.25%;
@@ -349,6 +353,10 @@ figure.fixedratio {
 
 @media (max-width:600px) {
   .video__title {
+    font-size: 1rem;
+  }
+
+  .video__notes h2 {
     font-size: 1rem;
   }
 }

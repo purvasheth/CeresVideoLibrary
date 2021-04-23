@@ -18,7 +18,7 @@ export function Notes({ id, finalNotes }) {
   };
   return (
     <div className="video__notes p-1">
-      <h2 className="flex justify-between">
+      <h2 className="flex justify-between align-center">
         Add Notes using markdown
         {isEditable ? (
           <div className="">
