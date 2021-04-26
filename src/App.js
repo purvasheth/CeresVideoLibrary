@@ -14,9 +14,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<VideoListing />} />
         <Route path="/playlists" element={<Playlists />} />
-        <Route path="/playlists/:playlistName" element={<GenericListing />} />
-        <Route path="/:videoId" element={<VideoDetail />} />
-        <Route path="*" element={<PageNotFound/>}/>
+        <Route path="/playlists/:playlistId" element={<GenericListing />} />
+        <Route path="/video/:videoId" element={<VideoDetail />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );

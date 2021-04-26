@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 export function BaseCard({ children, id, avatarSrc, ...rest }) {
   const navigate = useNavigate();
   const openVideo = (e) => {
-    navigate(`/${id}`)
+    navigate(`/video/${id}`);
     e.stopPropagation();
-  }
+  };
 
   return (
     <div key={id} className="card card--shadow m-1">

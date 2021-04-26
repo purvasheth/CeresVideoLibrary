@@ -71,6 +71,14 @@
   padding-top: 0.5rem;
 }
 
+.pl-sm {
+  padding-left: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 3rem;
+}
+
 /***************** Thumnail img ***************/
 figure.fixedratio {
   padding-top: 56.25%;
@@ -199,6 +207,10 @@ figure.fixedratio {
   color: black;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
+}
+
+.name--regular:disabled {
+  background-color: white;
 }
 
 .name--editable {
@@ -347,6 +359,11 @@ figure.fixedratio {
   padding: 0 2rem;
   text-align: left;
   box-sizing: border-box;
+}
+
+/******************** spinner *********************/
+.spinner--large {
+  font-size: 3rem;
 }
 
 /****************** media query *********************/

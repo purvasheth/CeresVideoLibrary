@@ -7,7 +7,11 @@ import {
   REMOVE_VIDEO_FROM_PLAYLIST,
 } from "../pages/playlists-reducer";
 import { usePlaylists } from "../pages/playlists-context";
-import { isPresentInArray } from "../pages/VideoListing";
+import { isPresentInArray } from "../utils";
+import { useAxios } from "../useAxios";
+import { API_PLAYLISTS } from "../urls";
+import { LoadingIndicator } from "./LoadingIndicator";
+import { useToggleVideo } from "../useToggleVideo";
 
 // TODO: add better styling for this modal
 export function PlaylistModal({ video, showSaveModal, setShowSaveModal }) {
@@ -27,60 +31,64 @@ function ExsistingPlaylistOptions({ video }) {
   const { playlists } = usePlaylists();
   return (
     <>
-      {playlists.length !== 0 && "Add to"}
+      {playlists.filter((playlist) => !playlist.defaultPlaylist).length !== 0 &&
+        "Add to"}
       <ul>
-        {playlists.map(({ id: playlistId, ...rest }) => (
-          <li key={playlistId}>
-            <PlaylistCheckBox playlistId={playlistId} video={video} {...rest} />
-          </li>
-        ))}
+        {playlists
+          .filter((playlist) => !playlist.defaultPlaylist)
+          .map(({ _id: playlistId, ...rest }) => (
+            <li key={playlistId}>
+              <PlaylistCheckBox
+                playlistId={playlistId}
+                video={video}
+                {...rest}
+              />
+            </li>
+          ))}
       </ul>
     </>
   );
 }
 function PlaylistCheckBox({ playlistId, video, name, videos }) {
-  const { playlistsDispatch } = usePlaylists();
-  const [isInPlaylist, setIsInPlaylist] = useState(
-    !!isPresentInArray(videos, video.id)
+  const { isLoading, toggleVideoInPlaylist } = useToggleVideo(
+    playlistId,
+    video
   );
-  const updatePlaylist = ({ e, playlistId, video }) => {
+  const [isInPlaylist, setIsInPlaylist] = useState(
+    !!isPresentInArray(videos, video._id)
+  );
+  const updatePlaylist = (e) => {
     const { checked } = e.target;
-    if (checked) {
-      // TODO : add toast here
-      // console.log("added", playlistId, videoId);
-    } else {
-      // TODO : add toast here
-      // console.log("removed", playlistId, videoId);
-    }
-    checked
-      ? playlistsDispatch({ type: ADD_VIDEO_TO_PLAYLIST, playlistId, video })
-      : playlistsDispatch({
-        type: REMOVE_VIDEO_FROM_PLAYLIST,
-        playlistId,
-        videoId: video.id,
-      });
+    toggleVideoInPlaylist(!checked);
     setIsInPlaylist((prev) => !prev);
   };
   return (
     <label>
-      <input
-        type="checkbox"
-        checked={isInPlaylist}
-        onChange={(e) => updatePlaylist({ e, playlistId, video })}
-      />
+      <LoadingIndicator small isLoading={isLoading}>
+        <input
+          type="checkbox"
+          checked={isInPlaylist}
+          onChange={(e) => updatePlaylist(e)}
+        />
+      </LoadingIndicator>
       {name}
     </label>
   );
 }
 function CreatePlaylist({ video, setShowSaveModal }) {
   const { playlistsDispatch } = usePlaylists();
+  const { postData: createPlaylist, isLoading } = useAxios(API_PLAYLISTS);
   const [showNameInput, setShowNameInput] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
-  const createNewPlaylist = ({ video, name }) => {
+  const createNewPlaylist = async ({ video, name }) => {
+    const playlist = await createPlaylist({
+      name,
+      videos: [video._id],
+    });
     playlistsDispatch({
       type: CREATE_PLAYLIST,
       playlist: {
-        id: faker.datatype.uuid(),
+        _id: playlist._id,
         name,
         videos: [video],
       },
@@ -89,29 +97,31 @@ function CreatePlaylist({ video, setShowSaveModal }) {
     setPlaylistName("");
   };
   return (
-    <>
-      <ToggleCreatePlaylistLabel
-        showNameInput={showNameInput}
-        setShowNameInput={setShowNameInput}
-      />
-      {showNameInput && (
-        <div className="flex flex-col mt-1">
-          <label className="input-label">Name</label>
-          <input
-            className="input"
-            type="text"
-            value={playlistName}
-            onChange={(e) => setPlaylistName(e.target.value)}
-          />
-          <button
-            className="btn bg-primary mt-1 mr-1"
-            onClick={() => createNewPlaylist({ name: playlistName, video })}
-          >
-            Create
-          </button>
-        </div>
-      )}
-    </>
+    <LoadingIndicator isLoading={isLoading}>
+      <>
+        <ToggleCreatePlaylistLabel
+          showNameInput={showNameInput}
+          setShowNameInput={setShowNameInput}
+        />
+        {showNameInput && (
+          <div className="flex flex-col mt-1">
+            <label className="input-label">Name</label>
+            <input
+              className="input"
+              type="text"
+              value={playlistName}
+              onChange={(e) => setPlaylistName(e.target.value)}
+            />
+            <button
+              className="btn bg-primary mt-1 mr-1"
+              onClick={() => createNewPlaylist({ name: playlistName, video })}
+            >
+              Create
+            </button>
+          </div>
+        )}
+      </>
+    </LoadingIndicator>
   );
 }
 function ToggleCreatePlaylistLabel({ showNameInput, setShowNameInput }) {

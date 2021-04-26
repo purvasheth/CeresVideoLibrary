@@ -1,15 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { useVideos } from "./videos-context";
-import { UPDATE_NOTES } from "./videos-reducer";
+import { EditIcons } from "../components/EditIcons";
+import { LoadingIndicator } from "../components/LoadingIndicator";
+import { API_VIDEOS } from "../urls";
+import { useAxios } from "../useAxios";
 
-export function Notes({ id, finalNotes }) {
+export function Notes({ videoId, finalNotes, setVideo }) {
   const [isEditable, setIsEditable] = useState(false);
-  const [notes, setNotes] = useState(finalNotes);
-  const { videosDispatch } = useVideos();
+  const { updateData: updateNotes, isLoading } = useAxios(API_VIDEOS);
+  const [notes, setNotes] = useState("");
 
-  const onSaveClick = () => {
-    videosDispatch({ type: UPDATE_NOTES, videoId: id, finalNotes: notes });
+  console.log(finalNotes);
+
+  useEffect(() => {
+    if (!notes) {
+      setNotes(finalNotes);
+    }
+  }, [finalNotes]);
+
+  const onSaveClick = async () => {
+    const { finalNotes: updatedNotes } = await updateNotes(videoId, {
+      finalNotes: notes,
+    });
+    console.log(updateNotes);
+    if (updateNotes) {
+      setVideo((prev) => ({ ...prev, finalNotes: updatedNotes }));
+    }
+
     setIsEditable(false);
   };
   const onCancelClick = () => {
@@ -18,43 +35,32 @@ export function Notes({ id, finalNotes }) {
   };
   return (
     <div className="video__notes p-1">
-      <h2 className="flex justify-between align-center">
-        Add Notes using markdown
+      <LoadingIndicator isLoading={isLoading}>
+        <h2 className="flex justify-between align-center">
+          Add Notes using markdown
+          {isEditable ? (
+            <EditIcons onCancel={onCancelClick} onSave={onSaveClick} />
+          ) : (
+            <button
+              className="btn btn--icon font--primary playlist__icon"
+              onClick={() => setIsEditable(true)}
+            >
+              <i className="fas fa-pen" />
+            </button>
+          )}
+        </h2>
         {isEditable ? (
-          <div className="">
-            <button
-              className="btn btn--icon btn--success playlist__icon"
-              onClick={onSaveClick}
-            >
-              <i class="fas fa-check" />
-            </button>
-            <button
-              className="btn btn--icon btn--warning playlist__icon"
-              onClick={onCancelClick}
-            >
-              <i class="fas fa-times" />
-            </button>
-          </div>
+          <textarea
+            className="ta--notes"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          ></textarea>
         ) : (
-          <button
-            className="btn btn--icon font--primary playlist__icon"
-            onClick={() => setIsEditable(true)}
-          >
-            <i class="fas fa-pen" />
-          </button>
+          <div className="react-markdown">
+            <ReactMarkdown>{finalNotes}</ReactMarkdown>
+          </div>
         )}
-      </h2>
-      {isEditable ? (
-        <textarea
-          className="ta--notes"
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-        ></textarea>
-      ) : (
-        <div className="react-markdown">
-          <ReactMarkdown>{finalNotes}</ReactMarkdown>
-        </div>
-      )}
+      </LoadingIndicator>
     </div>
   );
 }

@@ -7,26 +7,46 @@ import {
 } from "./playlists-reducer";
 import { CloseButton } from "../components/CloseButton";
 import { BaseCard } from "../components/BaseCard";
+import { EditIcons } from "../components/EditIcons";
+import { useAxios } from "../useAxios";
+import { API_PLAYLISTS } from "../urls";
+import { LoadingIndicator } from "../components/LoadingIndicator";
+import { useNavigate } from "react-router";
 
 export function Playlists() {
   const { playlists } = usePlaylists();
+  const navigate = useNavigate();
   return (
     <div className="container">
-      <h1>My Playlists</h1>
-      {playlists.map(({ id, name, videos }) => (
-        <Fragment key={id}>
-          <PlaylistHeader name={name} id={id} />
+      <h1>All Playlists</h1>
+      {playlists.map(({ _id, name, videos, defaultPlaylist }) => (
+        <Fragment key={_id}>
+          <PlaylistHeader
+            name={name}
+            _id={_id}
+            defaultPlaylist={defaultPlaylist}
+          />
           <div className="flex">
-            {videos.length === 0 && "No videos added to this playlist"}
-            <PlaylistVideos videos={videos} id={id} />
+            {videos.length === 0 && (
+              <p className="pl-sm">No videos added to this playlist</p>
+            )}
+            <PlaylistVideos videos={videos} _id={_id} />
           </div>
+          {videos.length > 4 && (
+            <button
+              className="btn bg-primary mb-1 ml-1"
+              onClick={() => navigate(`/playlists/${_id}`)}
+            >
+              See All
+            </button>
+          )}
         </Fragment>
       ))}
     </div>
   );
 }
 
-function PlaylistVideos({ videos, id }) {
+function PlaylistVideos({ videos, _id }) {
   const { playlistsDispatch } = usePlaylists();
   const removeVideoFromPlaylist = ({ videoId, playlistId }) => {
     playlistsDispatch({
@@ -35,12 +55,12 @@ function PlaylistVideos({ videos, id }) {
       playlistId,
     });
   };
-  return videos.map(({ id: videoId, ...rest }) => {
+  return videos.slice(0, 4).map(({ _id: videoId, id: youtubeId, ...rest }) => {
     return (
-      <BaseCard key={videoId} id={videoId} {...rest}>
+      <BaseCard key={videoId} id={youtubeId} {...rest}>
         <CloseButton
           onClick={() => {
-            removeVideoFromPlaylist({ videoId, playlistId: id });
+            removeVideoFromPlaylist({ videoId, playlistId: _id });
           }}
         />
       </BaseCard>
@@ -48,71 +68,59 @@ function PlaylistVideos({ videos, id }) {
   });
 }
 
-function PlaylistHeader({ name, id }) {
+function PlaylistHeader({ name, _id, defaultPlaylist }) {
   const [playlistName, setPlaylistName] = useState(name);
   const [isEditable, setIsEditable] = useState(false);
+  const { playlistsDispatch } = usePlaylists();
+  const { isLoading, updateData: updatePlaylistName } = useAxios(API_PLAYLISTS);
+  const editPlaylistName = async () => {
+    const success = await updatePlaylistName(_id, { name: playlistName });
+    if (success) {
+      playlistsDispatch({
+        type: EDIT_PLAYLIST_NAME,
+        playlistName,
+        playlistId: _id,
+      });
+      setIsEditable(false);
+    }
+  };
   const resetPlaylistName = () => {
     setPlaylistName(name);
     setIsEditable(false);
   };
   return (
     <div className="playlist__header">
-      <input
-        type="text"
-        value={playlistName}
-        onChange={(e) => setPlaylistName(e.target.value)}
-        onFocus={() => setIsEditable(true)}
-        className={`input name--regular ${isEditable ? "name--editable" : ""}`}
-      />
+      <LoadingIndicator isLoading={isLoading} small>
+        <input
+          type="text"
+          value={playlistName}
+          onChange={(e) => setPlaylistName(e.target.value)}
+          onFocus={() => setIsEditable(true)}
+          className={`input name--regular ${
+            isEditable ? "name--editable" : ""
+          }`}
+          disabled={defaultPlaylist}
+        />
+      </LoadingIndicator>
       <div className="flex">
-        {!isEditable ? (
-          <DefaultIcons setIsEditable={setIsEditable} id={id} />
-        ) : (
-          <EditIcons
-            setIsEditable={setIsEditable}
-            id={id}
-            playlistName={playlistName}
-            setPlaylistName={setPlaylistName}
-            resetPlaylistName={resetPlaylistName}
-          />
-        )}
+        {!defaultPlaylist &&
+          (!isEditable ? (
+            <DefaultIcons setIsEditable={setIsEditable} _id={_id} />
+          ) : (
+            <EditIcons onSave={editPlaylistName} onCancel={resetPlaylistName} />
+          ))}
       </div>
     </div>
   );
 }
-function EditIcons({ setIsEditable, id, playlistName, resetPlaylistName }) {
+function DefaultIcons({ setIsEditable, _id }) {
   const { playlistsDispatch } = usePlaylists();
-  const editPlaylistName = () => {
-    playlistsDispatch({
-      type: EDIT_PLAYLIST_NAME,
-      playlistName,
-      playlistId: id,
-    });
-    setIsEditable(false);
-  };
-
-  return (
-    <>
-      <button
-        class="btn btn--icon btn--success playlist__icon"
-        onClick={editPlaylistName}
-      >
-        <i class="fas fa-check"></i>
-      </button>
-      <button
-        class="btn btn--icon btn--warning playlist__icon"
-        onClick={resetPlaylistName}
-      >
-        <i class="fas fa-times"></i>
-      </button>
-    </>
-  );
-}
-
-function DefaultIcons({ setIsEditable, id }) {
-  const { playlistsDispatch } = usePlaylists();
-  const deletePlaylist = () => {
-    playlistsDispatch({ type: DELETE_PLAYLIST, playlistId: id });
+  const { deleteData, isLoading } = useAxios(API_PLAYLISTS);
+  const deletePlaylist = async () => {
+    const success = await deleteData(_id);
+    if (success) {
+      playlistsDispatch({ type: DELETE_PLAYLIST, playlistId: _id });
+    }
   };
   return (
     <>
@@ -120,13 +128,15 @@ function DefaultIcons({ setIsEditable, id }) {
         className="btn btn--icon font--primary playlist__icon"
         onClick={() => setIsEditable(true)}
       >
-        <i class="fas fa-pen" />
+        <i className="fas fa-pen" />
       </button>
       <button
         className="btn btn--icon btn--warning playlist__icon"
         onClick={deletePlaylist}
       >
-        <i class="fas fa-trash-alt" />
+        <LoadingIndicator isLoading={isLoading} small>
+          <i className="fas fa-trash-alt" />
+        </LoadingIndicator>
       </button>
     </>
   );

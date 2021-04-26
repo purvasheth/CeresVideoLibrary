@@ -1,19 +1,24 @@
 import { useState } from "react";
-import {
-  ADD_TO_GENERIC_ARRAY,
-  REMOVE_FROM_GENERIC_ARRAY,
-} from "./generic-reducer";
 import { usePlaylists } from "./playlists-context";
 import { BaseCard } from "../components/BaseCard";
 import { SaveModalButton, PlaylistModal } from "../components/PlaylistModal";
 import { useVideos } from "./videos-context";
 import { categories } from "../data";
-
-export const isPresentInArray = (array, id) =>
-  array.find((video) => video.id === id);
+import { useAxios } from "../useAxios";
+import { API_PLAYLISTS } from "../urls";
+import { LoadingIndicator } from "../components/LoadingIndicator";
+import {
+  ADD_VIDEO_TO_PLAYLIST,
+  REMOVE_VIDEO_FROM_PLAYLIST,
+} from "./playlists-reducer";
+import { getDefaultPlaylistArray, isPresentInArray } from "../utils";
+import { useToggleVideo } from "../useToggleVideo";
 
 export function VideoListing() {
+  const { likedVideosId, watchLaterId, playlists } = usePlaylists();
   const { videos } = useVideos();
+  const likedVideos = getDefaultPlaylistArray(playlists, likedVideosId);
+  const watchLater = getDefaultPlaylistArray(playlists, watchLaterId);
   const [activeCategory, setActiveCategory] = useState("All");
   return (
     <div className="container">
@@ -35,7 +40,14 @@ export function VideoListing() {
               activeCategory === "All" || activeCategory === category
           )
           .map(({ id, ...rest }) => {
-            return <VideoCard key={id} id={id} {...rest} />;
+            return (
+              <VideoCard
+                key={id}
+                video={{ ...rest, id }}
+                watchLater={watchLater}
+                likedVideos={likedVideos}
+              />
+            );
           })}
       </div>
     </div>
@@ -45,7 +57,7 @@ export function VideoListing() {
 function CategoryBadge({ activeCategory, setActiveCategory, category }) {
   return (
     <span
-      class={`badge--regular m-1 clickable ${
+      className={`badge--regular m-1 clickable ${
         activeCategory === category ? "bg-primary" : "bg-primary-200"
       }`}
       onClick={() => setActiveCategory(category)}
@@ -55,13 +67,17 @@ function CategoryBadge({ activeCategory, setActiveCategory, category }) {
   );
 }
 
-function VideoCard(video) {
+function VideoCard({ video, watchLater, likedVideos }) {
   const [showSaveModal, setShowSaveModal] = useState(false);
 
   return (
     <BaseCard {...video}>
       <VideoCardFooter>
-        <ToggleIconGroup video={video} />
+        <ToggleIconGroup
+          video={video}
+          watchLater={watchLater}
+          likedVideos={likedVideos}
+        />
         <SaveModalButton setShowSaveModal={setShowSaveModal} />
       </VideoCardFooter>
       <PlaylistModal
@@ -77,49 +93,44 @@ export function VideoCardFooter({ children }) {
   return <div className="flex align-center pb-1 pl-1 pr-1">{children}</div>;
 }
 
-export function ToggleIconGroup({ video }) {
-  const { watchLater, likedVideos } = usePlaylists();
+const defaultPlaylist = { _id: "", videos: [] };
+
+export function ToggleIconGroup({ video, likedVideos, watchLater }) {
   return (
     <>
-      <ToggleIcon array={likedVideos} arrayName="likedVideos" video={video} />
-      <ToggleIcon array={watchLater} arrayName="watchLater" video={video} />
+      <ToggleIcon playlist={likedVideos || defaultPlaylist} video={video} />
+      <ToggleIcon playlist={watchLater || defaultPlaylist} video={video} />
     </>
   );
 }
 
-export function ToggleIcon({ array, arrayName, video }) {
-  const { watchLaterDispatch, likedVideosDispatch } = usePlaylists();
+export function ToggleIcon({ playlist, video }) {
+  const { isLoading, toggleVideoInPlaylist } = useToggleVideo(
+    playlist._id,
+    video
+  );
 
-  const getCardIconsClass = (array, id) => {
-    if (isPresentInArray(array, id))
+  const getCardIconsClass = (id) => {
+    if (isPresentInArray(playlist.videos, id))
       return "btn btn--icon card__icon font--primary";
     return "btn btn--icon card__icon";
-  };
-  const toggleGenericArray = ({ arrayName, video, array }) => {
-    let type = ADD_TO_GENERIC_ARRAY;
-    if (isPresentInArray(array, video.id)) type = REMOVE_FROM_GENERIC_ARRAY;
-    const dispatchArgs = { type, arrayName, video };
-    arrayName === "likedVideos"
-      ? likedVideosDispatch(dispatchArgs)
-      : watchLaterDispatch(dispatchArgs);
   };
 
   return (
     <button
-      className={getCardIconsClass(array, video.id)}
+      className={getCardIconsClass(video._id)}
+      disabled={isLoading}
       onClick={() =>
-        toggleGenericArray({
-          arrayName,
-          array,
-          video,
-        })
+        toggleVideoInPlaylist(isPresentInArray(playlist.videos, video._id))
       }
     >
-      {arrayName === "likedVideos" ? (
-        <i className="fas fa-thumbs-up" />
-      ) : (
-        <i className="fas fa-clock" />
-      )}
+      <LoadingIndicator isLoading={isLoading} small>
+        {playlist.name === "Liked Videos" ? (
+          <i className="fas fa-thumbs-up" />
+        ) : (
+          <i className="fas fa-clock" />
+        )}
+      </LoadingIndicator>
     </button>
   );
 }
