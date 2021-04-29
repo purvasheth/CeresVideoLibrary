@@ -5,12 +5,18 @@ import { Avatar } from "../components/BaseCard";
 import { SaveModalButton, PlaylistModal } from "../components/PlaylistModal";
 import { useEffect, useState } from "react";
 import { usePlaylists } from "./playlists-context";
-import { ADD_TO_HISTORY_ARRAY } from "./generic-reducer";
+import {
+  ADD_TO_HISTORY,
+  SET_HISTORY,
+  UPDATE_TIMESTAMP,
+} from "./history-reducer";
 import { Notes } from "./Notes";
 import { useAxios } from "../useAxios";
-import { API_VIDEOS } from "../urls";
+import { API_HISTORY, API_VIDEOS } from "../urls";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import { getDefaultPlaylistArray } from "../utils";
+import { useHistory } from "./history-context";
+import { VideoProvider } from "./videos-context";
 
 export function VideoDetail() {
   const { videoId } = useParams();
@@ -18,9 +24,22 @@ export function VideoDetail() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [video, setVideo] = useState({});
   const { isLoading, getData: getVideo } = useAxios(`${API_VIDEOS}/${videoId}`);
+  const {
+    postData: addToHistory,
+    updateData: updateTimestamp,
+    getData: getHistory,
+  } = useAxios(API_HISTORY);
   const likedVideos = getDefaultPlaylistArray(playlists, likedVideosId);
   const watchLater = getDefaultPlaylistArray(playlists, watchLaterId);
-  const { historyDispatch } = usePlaylists();
+  const { history, historyDispatch } = useHistory();
+  const {
+    _id: mongooseVideoId,
+    id,
+    avatarSrc,
+    uploadedBy,
+    finalNotes,
+    name,
+  } = video;
 
   useEffect(() => {
     (async () => {
@@ -34,7 +53,36 @@ export function VideoDetail() {
     };
   }, []);
 
-  const { id, avatarSrc, uploadedBy, finalNotes, name } = video;
+  useEffect(() => {
+    if (mongooseVideoId) {
+      if (history.length === 0) {
+        (async () => {
+          const fetchedVideos = await getHistory();
+          historyDispatch({ type: SET_HISTORY, fetchedVideos });
+        })();
+      }
+      (async () => {
+        const historyVideo = history.find(
+          (historyVideo) => historyVideo.id === videoId
+        );
+        if (historyVideo) {
+          const { timestamp } = await updateTimestamp(historyVideo._id, {});
+          historyDispatch({
+            type: UPDATE_TIMESTAMP,
+            historyVideo: { ...historyVideo, timestamp },
+          });
+        } else {
+          const { timestamp, _id } = await addToHistory({
+            id: mongooseVideoId,
+          });
+          historyDispatch({
+            type: ADD_TO_HISTORY,
+            historyVideo: { id, avatarSrc, name, uploadedBy, timestamp, _id },
+          });
+        }
+      })();
+    }
+  }, [video]);
 
   return (
     <div className="container flex width-full">

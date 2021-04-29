@@ -3,13 +3,15 @@ import { NavLink } from "react-router-dom";
 import { usePlaylists } from "../pages/playlists-context";
 import { SET_VIDEOS } from "../pages/videos-reducer";
 import { useAxios } from "../useAxios";
-import { API_VIDEOS, API_PLAYLISTS } from "../urls";
+import { API_VIDEOS, API_PLAYLISTS, API_HISTORY } from "../urls";
 import { useVideos } from "../pages/videos-context";
 import {
   SET_LIKED_VIDEOS_ID,
   SET_PLAYLISTS,
   SET_WATCH_LATER_ID,
 } from "../pages/playlists-reducer";
+import { useHistory } from "../pages/history-context";
+import { SET_HISTORY } from "../pages/history-reducer";
 
 export function NavigationBar() {
   const [expandNavbar, setExpandNavbar] = useState(false);
@@ -75,6 +77,7 @@ function Navigation({ expandNavbar }) {
       <ul className="nav__list nav__list--primary">
         <NavigationItem route="/">Home</NavigationItem>
         <NavigationItem route="playlists">Playlists</NavigationItem>
+        <NavigationItem route="history">History</NavigationItem>
         {/* <NavigationItem route="playlists/history">History</NavigationItem>*/}
       </ul>
     </nav>
