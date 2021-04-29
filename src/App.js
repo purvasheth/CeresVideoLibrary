@@ -1,7 +1,7 @@
 import "./styles.css";
 import { VideoListing } from "./pages/VideoListing";
 import { Playlists } from "./pages/Playlists";
-import { GenericListing } from "./pages/GenericListing";
+import { PlaylistDetail } from "./pages/PlaylistDetail";
 import { Routes, Route } from "react-router-dom";
 import { NavigationBar } from "./components/NavigationBar";
 import { VideoDetail } from "./pages/VideoDetail";
@@ -14,7 +14,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<VideoListing />} />
         <Route path="/playlists" element={<Playlists />} />
-        <Route path="/playlists/:playlistId" element={<GenericListing />} />
+        <Route path="/playlists/:playlistId" element={<PlaylistDetail />} />
         <Route path="/video/:videoId" element={<VideoDetail />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

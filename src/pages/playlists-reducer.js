@@ -38,14 +38,14 @@ export const playlistsReducer = (
     case REMOVE_VIDEO_FROM_PLAYLIST:
       return {
         ...state,
-        playlists: playlists.map((playlist) =>
-          playlist._id !== playlistId
+        playlists: playlists.map((playlist) => {
+          return playlist._id !== playlistId
             ? playlist
             : {
                 ...playlist,
                 videos: playlist.videos.filter(({ _id }) => _id !== videoId),
-              }
-        ),
+              };
+        }),
       };
     case EDIT_PLAYLIST_NAME:
       return {

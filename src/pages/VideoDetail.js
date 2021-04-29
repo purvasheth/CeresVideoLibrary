@@ -25,18 +25,10 @@ export function VideoDetail() {
   useEffect(() => {
     (async () => {
       const fetchedVideo = await getVideo();
-      console.log(fetchedVideo);
       if (fetchedVideo) {
         setVideo(fetchedVideo);
       }
     })();
-
-    // historyDispatch({
-    //   type: ADD_TO_HISTORY_ARRAY,
-    //   arrayName: "history",
-    //   video,
-    //   timestamp: new Date(),
-    // });
     return () => {
       setVideo({});
     };

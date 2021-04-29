@@ -19,50 +19,43 @@ export function Playlists() {
   return (
     <div className="container">
       <h1>All Playlists</h1>
-      {playlists.map(({ _id, name, videos, defaultPlaylist }) => (
-        <Fragment key={_id}>
-          <PlaylistHeader
-            name={name}
-            _id={_id}
-            defaultPlaylist={defaultPlaylist}
-          />
-          <div className="flex">
-            {videos.length === 0 && (
-              <p className="pl-sm">No videos added to this playlist</p>
+      {playlists.map((playlist) => {
+        const { _id, name, videos, defaultPlaylist } = playlist;
+        return (
+          <Fragment key={_id}>
+            <PlaylistHeader
+              name={name}
+              _id={_id}
+              defaultPlaylist={defaultPlaylist}
+            />
+            <div className="flex">
+              {videos.length === 0 && (
+                <p className="pl-sm">No videos added to this playlist</p>
+              )}
+              <PlaylistVideos videos={videos} _id={_id} />
+            </div>
+            {videos.length > 4 && (
+              <button
+                className="btn bg-primary mb-1 ml-1"
+                onClick={() =>
+                  navigate(`/playlists/${_id}`, { state: playlist })
+                }
+              >
+                See All
+              </button>
             )}
-            <PlaylistVideos videos={videos} _id={_id} />
-          </div>
-          {videos.length > 4 && (
-            <button
-              className="btn bg-primary mb-1 ml-1"
-              onClick={() => navigate(`/playlists/${_id}`)}
-            >
-              See All
-            </button>
-          )}
-        </Fragment>
-      ))}
+          </Fragment>
+        );
+      })}
     </div>
   );
 }
 
 function PlaylistVideos({ videos, _id }) {
-  const { playlistsDispatch } = usePlaylists();
-  const removeVideoFromPlaylist = ({ videoId, playlistId }) => {
-    playlistsDispatch({
-      type: REMOVE_VIDEO_FROM_PLAYLIST,
-      videoId,
-      playlistId,
-    });
-  };
-  return videos.slice(0, 4).map(({ _id: videoId, id: youtubeId, ...rest }) => {
+  return videos.slice(0, 4).map((video) => {
     return (
-      <BaseCard key={videoId} id={youtubeId} {...rest}>
-        <CloseButton
-          onClick={() => {
-            removeVideoFromPlaylist({ videoId, playlistId: _id });
-          }}
-        />
+      <BaseCard key={video._id} {...video}>
+        <CloseButton video={video} playlistId={_id} />
       </BaseCard>
     );
   });

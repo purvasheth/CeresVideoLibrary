@@ -10,8 +10,6 @@ export function Notes({ videoId, finalNotes, setVideo }) {
   const { updateData: updateNotes, isLoading } = useAxios(API_VIDEOS);
   const [notes, setNotes] = useState("");
 
-  console.log(finalNotes);
-
   useEffect(() => {
     if (!notes) {
       setNotes(finalNotes);
@@ -22,7 +20,6 @@ export function Notes({ videoId, finalNotes, setVideo }) {
     const { finalNotes: updatedNotes } = await updateNotes(videoId, {
       finalNotes: notes,
     });
-    console.log(updateNotes);
     if (updateNotes) {
       setVideo((prev) => ({ ...prev, finalNotes: updatedNotes }));
     }
