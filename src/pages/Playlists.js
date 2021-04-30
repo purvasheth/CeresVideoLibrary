@@ -1,10 +1,6 @@
 import { Fragment, useState } from "react";
 import { usePlaylists } from "./playlists-context";
-import {
-  DELETE_PLAYLIST,
-  EDIT_PLAYLIST_NAME,
-  REMOVE_VIDEO_FROM_PLAYLIST,
-} from "./playlists-reducer";
+import { DELETE_PLAYLIST, EDIT_PLAYLIST_NAME } from "./playlists-reducer";
 import { CloseButton } from "../components/CloseButton";
 import { BaseCard } from "../components/BaseCard";
 import { EditIcons } from "../components/EditIcons";

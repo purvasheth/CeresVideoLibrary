@@ -67,7 +67,7 @@ function CategoryBadge({ activeCategory, setActiveCategory, category }) {
   );
 }
 
-function VideoCard({ video, watchLater, likedVideos }) {
+export function VideoCard({ video, watchLater, likedVideos }) {
   const [showSaveModal, setShowSaveModal] = useState(false);
 
   return (

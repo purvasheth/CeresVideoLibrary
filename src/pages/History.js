@@ -1,12 +1,10 @@
 import { BaseCard } from "../components/BaseCard";
-import { CloseButton } from "../components/CloseButton";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import { useHistory } from "./history-context";
 import { REMOVE_FROM_HISTORY, SET_HISTORY } from "./history-reducer";
 import { useAxios } from "../useAxios";
 import { API_HISTORY } from "../urls";
-import { REMOVE_VIDEO_FROM_PLAYLIST } from "./playlists-reducer";
 
 export function History() {
   const { history, historyDispatch } = useHistory();

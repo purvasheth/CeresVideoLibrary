@@ -1,11 +1,6 @@
-import faker from "faker";
 import { Modal } from "./Modal";
 import { useState } from "react";
-import {
-  ADD_VIDEO_TO_PLAYLIST,
-  CREATE_PLAYLIST,
-  REMOVE_VIDEO_FROM_PLAYLIST,
-} from "../pages/playlists-reducer";
+import { CREATE_PLAYLIST } from "../pages/playlists-reducer";
 import { usePlaylists } from "../pages/playlists-context";
 import { isPresentInArray } from "../utils";
 import { useAxios } from "../useAxios";
