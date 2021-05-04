@@ -1,3 +1,4 @@
+import { successToast } from "./components/toasts";
 import { usePlaylists } from "./pages/playlists-context";
 import {
   ADD_VIDEO_TO_PLAYLIST,
@@ -17,6 +18,7 @@ export function useToggleVideo(playlistId, video) {
     if (!isPresent) {
       const success = await addVideoToPlaylist(video._id, {});
       if (success) {
+        successToast(`Added video to playlist`);
         playlistsDispatch({
           type: ADD_VIDEO_TO_PLAYLIST,
           video,
@@ -26,6 +28,7 @@ export function useToggleVideo(playlistId, video) {
     } else {
       const success = await removeVideoFromPlaylist(video._id);
       if (success) {
+        successToast(`Removed video from playlist`);
         playlistsDispatch({
           type: REMOVE_VIDEO_FROM_PLAYLIST,
           videoId: video._id,

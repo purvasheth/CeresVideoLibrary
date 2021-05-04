@@ -31,7 +31,11 @@ export function PlaylistDetail() {
           {videos.map((video) => {
             return (
               <BaseCard key={video._id} {...video}>
-                <CloseButton video={video} playlistId={playlistId} />
+                <CloseButton
+                  name={name}
+                  video={video}
+                  playlistId={playlistId}
+                />
               </BaseCard>
             );
           })}

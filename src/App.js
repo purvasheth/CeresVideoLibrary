@@ -8,10 +8,12 @@ import { VideoDetail } from "./pages/VideoDetail";
 import { PageNotFound } from "./pages/PageNotFound";
 import { History } from "./pages/History";
 import { SearchResults } from "./pages/SearchResults";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
     <div>
+      <ToastContainer />
       <NavigationBar />
       <Routes>
         <Route path="/" element={<VideoListing />} />

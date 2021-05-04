@@ -1,23 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
-// import { errorToast, successToast } from "./components/toasts";
+import { errorToast } from "./components/toasts";
 
 export const useAxios = (url) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  async function genericRequest(callback, successMessage) {
+  async function genericRequest(callback) {
     try {
       setIsLoading(true);
       const data = await callback();
       return data;
     } catch (err) {
-      //errorToast("Reqest Falied! Server Error");
-      //return err;
+      errorToast("Reqest Falied! Server Error");
     } finally {
       setIsLoading(false);
-      // if (successMessage) {
-      //   successToast(successMessage);
-      // }
     }
   }
 

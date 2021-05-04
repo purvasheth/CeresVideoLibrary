@@ -1,5 +1,7 @@
+@import url("react-toastify/dist/ReactToastify.css");
 @import url("https://purvasheth.github.io/Ceres-Component-Lib/lib/styles.css");
 @import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+
 
 :root {
   --primary: #6d28d9;
@@ -7,10 +9,12 @@
   --red-600: #DC2626;
   --grey-300: #D1D5DB;
   --grey-500: #6B7280;
+  --grey-600: #4B5563;
   --green-600: #059669;
   --red-100: #FEE2E2;
   --green-100: #D1FAE5;
   --min-width: 250px;
+
 }
 
 /**************** utility classses ******************/
@@ -365,6 +369,18 @@ figure.fixedratio {
 .spinner--large {
   font-size: 3rem;
 }
+
+/******************* toasts ***********************/
+
+.Toastify__close-button {
+  color: var(--grey-600);
+}
+
+.Toastify__close-button:hover,
+.Toastify__close-button:focus {
+  color: var(--text-primary);
+}
+
 
 /****************** media query *********************/
 
