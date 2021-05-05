@@ -1,10 +1,9 @@
 import { useToggleVideo } from "../useToggleVideo";
 import { LoadingIndicator } from "./LoadingIndicator";
 
-export const CloseButton = ({ video, name, playlistId }) => {
+export const CloseButton = ({ video, playlistId }) => {
   const { isLoading, toggleVideoInPlaylist } = useToggleVideo({
     video,
-    name,
     playlistId,
   });
   return (

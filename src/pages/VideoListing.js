@@ -105,10 +105,10 @@ export function ToggleIconGroup({ video, likedVideos, watchLater }) {
 }
 
 export function ToggleIcon({ playlist, video }) {
-  const { isLoading, toggleVideoInPlaylist } = useToggleVideo(
-    playlist._id,
-    video
-  );
+  const { isLoading, toggleVideoInPlaylist } = useToggleVideo({
+    playlistId: playlist._id,
+    video,
+  });
 
   const getCardIconsClass = (id) => {
     if (isPresentInArray(playlist.videos, id))

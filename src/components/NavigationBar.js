@@ -36,12 +36,16 @@ function Navigation({ expandNavbar }) {
   useEffect(() => {
     (async () => {
       const fetchedVideos = await getVideos();
-      videosDispatch({ type: SET_VIDEOS, fetchedVideos });
+      if (fetchedVideos) {
+        videosDispatch({ type: SET_VIDEOS, fetchedVideos });
+      }
     })();
     (async () => {
       const fetchedPlaylists = await getPlaylists();
-      setDefaultPlaylistIds(fetchedPlaylists);
-      playlistsDispatch({ type: SET_PLAYLISTS, fetchedPlaylists });
+      if (fetchedPlaylists) {
+        setDefaultPlaylistIds(fetchedPlaylists);
+        playlistsDispatch({ type: SET_PLAYLISTS, fetchedPlaylists });
+      }
     })();
   }, []);
 

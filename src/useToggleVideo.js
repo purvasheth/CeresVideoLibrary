@@ -7,7 +7,7 @@ import {
 import { API_PLAYLISTS } from "./urls";
 import { useAxios } from "./useAxios";
 
-export function useToggleVideo(playlistId, video) {
+export function useToggleVideo({ playlistId, video }) {
   const { playlistsDispatch } = usePlaylists();
   const {
     updateData: addVideoToPlaylist,

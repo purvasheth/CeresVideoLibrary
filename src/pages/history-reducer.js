@@ -5,7 +5,7 @@ export const UPDATE_TIMESTAMP = "updateTimestamp";
 
 export const historyReducer = (
   { history },
-  { type, historyVideo, fetchedVideos, videoId }
+  { type, historyVideo, fetchedVideos, videoId, timestamp }
 ) => {
   switch (type) {
     case SET_HISTORY:
@@ -23,7 +23,7 @@ export const historyReducer = (
     case UPDATE_TIMESTAMP:
       return {
         history: history.map((video) =>
-          video._id === historyVideo._id ? historyVideo : video
+          video._id === videoId ? { ...video, timestamp } : video
         ),
       };
 

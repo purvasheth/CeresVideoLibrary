@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Iframe } from "../components/Iframe";
 import { ToggleIconGroup } from "./VideoListing";
 import { Avatar } from "../components/BaseCard";
@@ -16,7 +16,6 @@ import { API_HISTORY, API_VIDEOS } from "../urls";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import { getDefaultPlaylistArray } from "../utils";
 import { useHistory } from "./history-context";
-import { VideoProvider } from "./videos-context";
 
 export function VideoDetail() {
   const { videoId } = useParams();
@@ -24,14 +23,11 @@ export function VideoDetail() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [video, setVideo] = useState({});
   const { isLoading, getData: getVideo } = useAxios(`${API_VIDEOS}/${videoId}`);
-  const {
-    postData: addToHistory,
-    updateData: updateTimestamp,
-    getData: getHistory,
-  } = useAxios(API_HISTORY);
+  const { postData: addToHistory, getData: getHistory } = useAxios(API_HISTORY);
   const likedVideos = getDefaultPlaylistArray(playlists, likedVideosId);
   const watchLater = getDefaultPlaylistArray(playlists, watchLaterId);
   const { history, historyDispatch } = useHistory();
+  const navigate = useNavigate();
   const {
     _id: mongooseVideoId,
     id,
@@ -46,6 +42,8 @@ export function VideoDetail() {
       const fetchedVideo = await getVideo();
       if (fetchedVideo) {
         setVideo(fetchedVideo);
+      } else {
+        navigate("/page-not-found");
       }
     })();
     return () => {
@@ -62,19 +60,16 @@ export function VideoDetail() {
         })();
       }
       (async () => {
-        const historyVideo = history.find(
-          (historyVideo) => historyVideo.id === videoId
-        );
-        if (historyVideo) {
-          const { timestamp } = await updateTimestamp(historyVideo._id, {});
+        const { timestamp, _id, updated } = await addToHistory({
+          id: video._id,
+        });
+        if (updated) {
           historyDispatch({
             type: UPDATE_TIMESTAMP,
-            historyVideo: { ...historyVideo, timestamp },
+            timestamp,
+            videoId: _id,
           });
         } else {
-          const { timestamp, _id } = await addToHistory({
-            id: mongooseVideoId,
-          });
           historyDispatch({
             type: ADD_TO_HISTORY,
             historyVideo: { id, avatarSrc, name, uploadedBy, timestamp, _id },

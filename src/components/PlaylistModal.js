@@ -8,16 +8,24 @@ import { API_PLAYLISTS } from "../urls";
 import { LoadingIndicator } from "./LoadingIndicator";
 import { useToggleVideo } from "../useToggleVideo";
 
-// TODO: add better styling for this modal
 export function PlaylistModal({ video, showSaveModal, setShowSaveModal }) {
+  const [showNameInput, setShowNameInput] = useState(false);
   return (
     <Modal
       showModal={showSaveModal}
-      onCloseClick={() => setShowSaveModal(false)}
+      onCloseClick={() => {
+        setShowSaveModal(false);
+        setShowNameInput(false);
+      }}
     >
       <div className="w-250">
         <ExsistingPlaylistOptions video={video} />
-        <CreatePlaylist video={video} setShowSaveModal={setShowSaveModal} />
+        <CreatePlaylist
+          video={video}
+          setShowSaveModal={setShowSaveModal}
+          showNameInput={showNameInput}
+          setShowNameInput={setShowNameInput}
+        />
       </div>
     </Modal>
   );
@@ -26,13 +34,13 @@ function ExsistingPlaylistOptions({ video }) {
   const { playlists } = usePlaylists();
   return (
     <>
-      {playlists.filter((playlist) => !playlist.defaultPlaylist).length !== 0 &&
-        "Add to"}
-      <ul>
+      {playlists.filter((playlist) => !playlist.defaultPlaylist).length !==
+        0 && <h3 className="playlist-modal__title">Save to</h3>}
+      <ul className="list">
         {playlists
           .filter((playlist) => !playlist.defaultPlaylist)
           .map(({ _id: playlistId, ...rest }) => (
-            <li key={playlistId}>
+            <li className="list__item" key={playlistId}>
               <PlaylistCheckBox
                 playlistId={playlistId}
                 video={video}
@@ -41,14 +49,15 @@ function ExsistingPlaylistOptions({ video }) {
             </li>
           ))}
       </ul>
+      <hr />
     </>
   );
 }
 function PlaylistCheckBox({ playlistId, video, name, videos }) {
-  const { isLoading, toggleVideoInPlaylist } = useToggleVideo(
+  const { isLoading, toggleVideoInPlaylist } = useToggleVideo({
     playlistId,
-    video
-  );
+    video,
+  });
   const [isInPlaylist, setIsInPlaylist] = useState(
     !!isPresentInArray(videos, video._id)
   );
@@ -64,16 +73,21 @@ function PlaylistCheckBox({ playlistId, video, name, videos }) {
           type="checkbox"
           checked={isInPlaylist}
           onChange={(e) => updatePlaylist(e)}
+          className="mr-1"
         />
       </LoadingIndicator>
       {name}
     </label>
   );
 }
-function CreatePlaylist({ video, setShowSaveModal }) {
+function CreatePlaylist({
+  video,
+  setShowSaveModal,
+  showNameInput,
+  setShowNameInput,
+}) {
   const { playlistsDispatch } = usePlaylists();
   const { postData: createPlaylist, isLoading } = useAxios(API_PLAYLISTS);
-  const [showNameInput, setShowNameInput] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
   const createNewPlaylist = async ({ video, name }) => {
     const playlist = await createPlaylist({
@@ -94,12 +108,9 @@ function CreatePlaylist({ video, setShowSaveModal }) {
   return (
     <LoadingIndicator isLoading={isLoading}>
       <>
-        <ToggleCreatePlaylistLabel
-          showNameInput={showNameInput}
-          setShowNameInput={setShowNameInput}
-        />
+        <CreatePlaylistButton setShowNameInput={setShowNameInput} />
         {showNameInput && (
-          <div className="flex flex-col mt-1">
+          <div className="flex flex-col mt-1 ml-1">
             <label className="input-label">Name</label>
             <input
               className="input"
@@ -108,7 +119,7 @@ function CreatePlaylist({ video, setShowSaveModal }) {
               onChange={(e) => setPlaylistName(e.target.value)}
             />
             <button
-              className="btn bg-primary mt-1 mr-1"
+              className="btn bg-primary mt-2"
               onClick={() => createNewPlaylist({ name: playlistName, video })}
             >
               Create
@@ -119,16 +130,19 @@ function CreatePlaylist({ video, setShowSaveModal }) {
     </LoadingIndicator>
   );
 }
-function ToggleCreatePlaylistLabel({ showNameInput, setShowNameInput }) {
+
+function CreatePlaylistButton({ setShowNameInput }) {
   return (
-    <label>
-      <input
-        type="checkbox"
-        checked={showNameInput}
-        onChange={() => setShowNameInput((prev) => !prev)}
-      />
+    <button
+      className="btn icon--transparent btn-lg"
+      onClick={() => {
+        setShowNameInput(true);
+      }}
+    >
+      <i className="fas fa-plus mr-sm"></i>
       Create New Playlist
-    </label>
+    </button>
+    // </label>
   );
 }
 export function SaveModalButton({ setShowSaveModal }) {
