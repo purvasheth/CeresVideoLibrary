@@ -1,9 +1,9 @@
-import { BaseCard } from "../components/BaseCard";
-import { CloseButton } from "../components/CloseButton";
+import { BaseCard } from "../../components/BaseCard";
+import { CloseButton } from "../../components/CloseButton";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { usePlaylists } from "./playlists-context";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 
 export function PlaylistDetail() {
   const { playlistId } = useParams();

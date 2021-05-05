@@ -1,4 +1,4 @@
-import { useToggleVideo } from "../useToggleVideo";
+import { useToggleVideo } from "../custom hooks/useToggleVideo";
 import { LoadingIndicator } from "./LoadingIndicator";
 
 export const CloseButton = ({ video, playlistId }) => {

@@ -1,12 +1,12 @@
 import "./styles.css";
-import { VideoListing } from "./pages/VideoListing";
-import { Playlists } from "./pages/Playlists";
-import { PlaylistDetail } from "./pages/PlaylistDetail";
+import { VideoListing } from "./pages/Videos/VideoListing";
+import { Playlists } from "./pages/Playlists/Playlists";
+import { PlaylistDetail } from "./pages/Playlists/PlaylistDetail";
 import { Routes, Route } from "react-router-dom";
 import { NavigationBar } from "./components/NavigationBar";
-import { VideoDetail } from "./pages/VideoDetail";
+import { VideoDetail } from "./pages/Videos/VideoDetail";
 import { PageNotFound } from "./pages/PageNotFound";
-import { History } from "./pages/History";
+import { History } from "./pages/History/History";
 import { SearchResults } from "./pages/SearchResults";
 import { ToastContainer } from "react-toastify";
 

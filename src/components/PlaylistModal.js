@@ -1,12 +1,12 @@
 import { Modal } from "./Modal";
 import { useState } from "react";
-import { CREATE_PLAYLIST } from "../pages/playlists-reducer";
-import { usePlaylists } from "../pages/playlists-context";
+import { CREATE_PLAYLIST } from "../pages/Playlists/playlists-reducer";
+import { usePlaylists } from "../pages/Playlists/playlists-context";
 import { isPresentInArray } from "../utils";
-import { useAxios } from "../useAxios";
+import { useAxios } from "../custom hooks/useAxios";
 import { API_PLAYLISTS } from "../urls";
 import { LoadingIndicator } from "./LoadingIndicator";
-import { useToggleVideo } from "../useToggleVideo";
+import { useToggleVideo } from "../custom hooks/useToggleVideo";
 
 export function PlaylistModal({ video, showSaveModal, setShowSaveModal }) {
   const [showNameInput, setShowNameInput] = useState(false);

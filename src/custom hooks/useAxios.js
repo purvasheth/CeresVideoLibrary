@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { errorToast } from "./components/toasts";
+import { errorToast } from "../components/toasts";
 
 export const useAxios = (url) => {
   const [isLoading, setIsLoading] = useState(false);

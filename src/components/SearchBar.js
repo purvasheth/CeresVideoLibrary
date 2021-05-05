@@ -11,8 +11,10 @@ export const SearchBar = () => {
   };
 
   const clearSearchResults = () => {
+    if (searchString) {
+      navigate(-1);
+    }
     setSearchString("");
-    navigate(-1);
   };
 
   return (

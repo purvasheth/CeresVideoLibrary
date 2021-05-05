@@ -1,12 +1,12 @@
 import { Fragment, useState } from "react";
 import { usePlaylists } from "./playlists-context";
 import { DELETE_PLAYLIST, EDIT_PLAYLIST_NAME } from "./playlists-reducer";
-import { CloseButton } from "../components/CloseButton";
-import { BaseCard } from "../components/BaseCard";
-import { EditIcons } from "../components/EditIcons";
-import { useAxios } from "../useAxios";
-import { API_PLAYLISTS } from "../urls";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+import { CloseButton } from "../../components/CloseButton";
+import { BaseCard } from "../../components/BaseCard";
+import { EditIcons } from "../../components/EditIcons";
+import { useAxios } from "../../custom hooks/useAxios";
+import { API_PLAYLISTS } from "../../urls";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { useNavigate } from "react-router";
 
 export function Playlists() {

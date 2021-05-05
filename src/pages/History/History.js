@@ -1,11 +1,11 @@
-import { BaseCard } from "../components/BaseCard";
+import { BaseCard } from "../../components/BaseCard";
 import { useEffect } from "react";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { useHistory } from "./history-context";
 import { REMOVE_FROM_HISTORY, SET_HISTORY } from "./history-reducer";
-import { useAxios } from "../useAxios";
-import { API_HISTORY } from "../urls";
-import { successToast } from "../components/toasts";
+import { useAxios } from "../../custom hooks/useAxios";
+import { API_HISTORY } from "../../urls";
+import { successToast } from "../../components/toasts";
 
 export function History() {
   const { history, historyDispatch } = useHistory();

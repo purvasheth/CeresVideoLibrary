@@ -1,21 +1,21 @@
 import { useNavigate, useParams } from "react-router";
-import { Iframe } from "../components/Iframe";
+import { Iframe } from "../../components/Iframe";
 import { ToggleIconGroup } from "./VideoListing";
-import { Avatar } from "../components/BaseCard";
-import { SaveModalButton, PlaylistModal } from "../components/PlaylistModal";
+import { Avatar } from "../../components/BaseCard";
+import { SaveModalButton, PlaylistModal } from "../../components/PlaylistModal";
 import { useEffect, useState } from "react";
-import { usePlaylists } from "./playlists-context";
+import { usePlaylists } from "../Playlists/playlists-context";
 import {
   ADD_TO_HISTORY,
   SET_HISTORY,
   UPDATE_TIMESTAMP,
-} from "./history-reducer";
+} from "../History/history-reducer";
 import { Notes } from "./Notes";
-import { useAxios } from "../useAxios";
-import { API_HISTORY, API_VIDEOS } from "../urls";
-import { LoadingIndicator } from "../components/LoadingIndicator";
-import { getDefaultPlaylistArray } from "../utils";
-import { useHistory } from "./history-context";
+import { useAxios } from "../../custom hooks/useAxios";
+import { API_HISTORY, API_VIDEOS } from "../../urls";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { getDefaultPlaylistArray } from "../../utils";
+import { useHistory } from "../History/history-context";
 
 export function VideoDetail() {
   const { videoId } = useParams();

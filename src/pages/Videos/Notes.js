@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { EditIcons } from "../components/EditIcons";
-import { LoadingIndicator } from "../components/LoadingIndicator";
-import { API_VIDEOS } from "../urls";
-import { useAxios } from "../useAxios";
+import { EditIcons } from "../../components/EditIcons";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { API_VIDEOS } from "../../urls";
+import { useAxios } from "../../custom hooks/useAxios";
 
 export function Notes({ videoId, finalNotes, setVideo }) {
   const [isEditable, setIsEditable] = useState(false);

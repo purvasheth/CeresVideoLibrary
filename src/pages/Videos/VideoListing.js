@@ -1,18 +1,12 @@
 import { useState } from "react";
-import { usePlaylists } from "./playlists-context";
-import { BaseCard } from "../components/BaseCard";
-import { SaveModalButton, PlaylistModal } from "../components/PlaylistModal";
+import { usePlaylists } from "../Playlists/playlists-context";
+import { BaseCard } from "../../components/BaseCard";
+import { SaveModalButton, PlaylistModal } from "../../components/PlaylistModal";
 import { useVideos } from "./videos-context";
-import { categories } from "../data";
-import { useAxios } from "../useAxios";
-import { API_PLAYLISTS } from "../urls";
-import { LoadingIndicator } from "../components/LoadingIndicator";
-import {
-  ADD_VIDEO_TO_PLAYLIST,
-  REMOVE_VIDEO_FROM_PLAYLIST,
-} from "./playlists-reducer";
-import { getDefaultPlaylistArray, isPresentInArray } from "../utils";
-import { useToggleVideo } from "../useToggleVideo";
+import { categories } from "../../data";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { getDefaultPlaylistArray, isPresentInArray } from "../../utils";
+import { useToggleVideo } from "../../custom hooks/useToggleVideo";
 
 export function VideoListing() {
   const { likedVideosId, watchLaterId, playlists } = usePlaylists();

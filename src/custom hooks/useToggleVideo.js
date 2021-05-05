@@ -1,10 +1,10 @@
-import { successToast } from "./components/toasts";
-import { usePlaylists } from "./pages/playlists-context";
+import { successToast } from "../components/toasts";
+import { usePlaylists } from "../pages/Playlists/playlists-context";
 import {
   ADD_VIDEO_TO_PLAYLIST,
   REMOVE_VIDEO_FROM_PLAYLIST,
-} from "./pages/playlists-reducer";
-import { API_PLAYLISTS } from "./urls";
+} from "../pages/Playlists/playlists-reducer";
+import { API_PLAYLISTS } from "../urls";
 import { useAxios } from "./useAxios";
 
 export function useToggleVideo({ playlistId, video }) {

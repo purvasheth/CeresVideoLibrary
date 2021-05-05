@@ -1,8 +1,8 @@
 import { useLocation } from "react-router";
 import { getDefaultPlaylistArray } from "../utils";
-import { usePlaylists } from "./playlists-context";
-import { VideoCard } from "./VideoListing";
-import { useVideos } from "./videos-context";
+import { usePlaylists } from "./Playlists/playlists-context";
+import { VideoCard } from "./Videos/VideoListing";
+import { useVideos } from "./Videos/videos-context";
 
 const getSearchResults = (videos, searchString) =>
   videos.filter((item) =>

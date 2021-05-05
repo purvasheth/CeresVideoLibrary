@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { usePlaylists } from "../pages/playlists-context";
-import { SET_VIDEOS } from "../pages/videos-reducer";
-import { useAxios } from "../useAxios";
+import { usePlaylists } from "../pages/Playlists/playlists-context";
+import { SET_VIDEOS } from "../pages/Videos/videos-reducer";
+import { useAxios } from "../custom hooks/useAxios";
 import { API_VIDEOS, API_PLAYLISTS } from "../urls";
-import { useVideos } from "../pages/videos-context";
+import { useVideos } from "../pages/Videos/videos-context";
 import {
   SET_LIKED_VIDEOS_ID,
   SET_PLAYLISTS,
   SET_WATCH_LATER_ID,
-} from "../pages/playlists-reducer";
+} from "../pages/Playlists/playlists-reducer";
 import { SearchBar } from "./SearchBar";
 
 export function NavigationBar() {
