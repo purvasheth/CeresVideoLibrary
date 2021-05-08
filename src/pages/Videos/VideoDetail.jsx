@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router";
 import { Iframe } from "../../components/Iframe";
-import { ToggleIconGroup } from "./VideoListing";
+import { ToggleIconGroup } from "../../components/ToggleIconGroup";
 import { Avatar } from "../../components/BaseCard";
 import { SaveModalButton, PlaylistModal } from "../../components/PlaylistModal";
 import { useEffect, useState } from "react";
@@ -37,6 +37,44 @@ export function VideoDetail() {
     name,
   } = video;
 
+  const updateHistory = (payload) => {
+    historyDispatch({
+      type: UPDATE_TIMESTAMP,
+      ...payload,
+    });
+  };
+
+  const addVideoToHistory = (payload) => {
+    historyDispatch({
+      type: ADD_TO_HISTORY,
+      historyVideo: {
+        id,
+        avatarSrc,
+        name,
+        uploadedBy,
+        ...payload,
+      },
+    });
+  };
+
+  const addVideOrUpdateHistory = async () => {
+    const { timestamp, _id, updated } = await addToHistory({
+      id: video._id,
+    });
+    if (updated) {
+      updateHistory({ timestamp, videoId: _id });
+    } else {
+      addVideoToHistory({ timestamp, _id });
+    }
+  };
+
+  const fetchHistory = async () => {
+    if (history.length === 0) {
+      const fetchedVideos = await getHistory();
+      historyDispatch({ type: SET_HISTORY, fetchedVideos });
+    }
+  };
+
   useEffect(() => {
     (async () => {
       const fetchedVideo = await getVideo();
@@ -53,29 +91,8 @@ export function VideoDetail() {
 
   useEffect(() => {
     if (mongooseVideoId) {
-      if (history.length === 0) {
-        (async () => {
-          const fetchedVideos = await getHistory();
-          historyDispatch({ type: SET_HISTORY, fetchedVideos });
-        })();
-      }
-      (async () => {
-        const { timestamp, _id, updated } = await addToHistory({
-          id: video._id,
-        });
-        if (updated) {
-          historyDispatch({
-            type: UPDATE_TIMESTAMP,
-            timestamp,
-            videoId: _id,
-          });
-        } else {
-          historyDispatch({
-            type: ADD_TO_HISTORY,
-            historyVideo: { id, avatarSrc, name, uploadedBy, timestamp, _id },
-          });
-        }
-      })();
+      fetchHistory();
+      addVideOrUpdateHistory();
     }
   }, [video]);
 
@@ -86,20 +103,18 @@ export function VideoDetail() {
           <h2 className="video__title">{name}</h2>
           <Iframe id={id} />
           <div>
-            <div className="flex">
-              <div className="video__info">
-                <div className="flex align-center justify-center flex-grow pt-sm">
-                  <ToggleIconGroup
-                    video={video}
-                    likedVideos={likedVideos}
-                    watchLater={watchLater}
-                  />
-                  <SaveModalButton setShowSaveModal={setShowSaveModal} />
-                </div>
-                <div className="p-1 flex align-center flex-no-wrap flex-grow justify-center ">
-                  <Avatar avatarSrc={avatarSrc} />
-                  <div>{uploadedBy}</div>
-                </div>
+            <div className="flex video__info">
+              <div className="flex align-center justify-center flex-grow pt-sm">
+                <ToggleIconGroup
+                  video={video}
+                  likedVideos={likedVideos}
+                  watchLater={watchLater}
+                />
+                <SaveModalButton setShowSaveModal={setShowSaveModal} />
+              </div>
+              <div className="p-1 flex align-center flex-no-wrap flex-grow justify-center ">
+                <Avatar avatarSrc={avatarSrc} />
+                <div>{uploadedBy}</div>
               </div>
               <PlaylistModal
                 video={video}

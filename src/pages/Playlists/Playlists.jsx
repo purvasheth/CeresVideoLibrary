@@ -11,7 +11,6 @@ import { useNavigate } from "react-router";
 
 export function Playlists() {
   const { playlists } = usePlaylists();
-  const navigate = useNavigate();
   return (
     <div className="container">
       <h1>All Playlists</h1>
@@ -24,22 +23,8 @@ export function Playlists() {
               _id={_id}
               defaultPlaylist={defaultPlaylist}
             />
-            <div className="flex">
-              {videos.length === 0 && (
-                <p className="pl-sm">No videos added to this playlist</p>
-              )}
-              <PlaylistVideos videos={videos} _id={_id} />
-            </div>
-            {videos.length > 4 && (
-              <button
-                className="btn bg-primary mb-1 ml-1"
-                onClick={() =>
-                  navigate(`/playlists/${_id}`, { state: playlist })
-                }
-              >
-                See All
-              </button>
-            )}
+            <PlaylistVideos videos={videos} _id={_id} />
+            {videos.length > 4 && <SeeAllButton playlistId={_id} />}
           </Fragment>
         );
       })}
@@ -47,14 +32,31 @@ export function Playlists() {
   );
 }
 
+function SeeAllButton({ playlistId }) {
+  const navigate = useNavigate();
+  return (
+    <button
+      className="btn bg-primary mb-1 ml-1"
+      onClick={() => navigate(`/playlists/${playlistId}`)}
+    >
+      See All
+    </button>
+  );
+}
+
 function PlaylistVideos({ videos, _id }) {
-  return videos.slice(0, 4).map((video) => {
-    return (
-      <BaseCard key={video._id} {...video}>
-        <CloseButton video={video} playlistId={_id} />
-      </BaseCard>
-    );
-  });
+  return (
+    <div className="flex">
+      {videos.length === 0 && (
+        <p className="pl-sm">No videos added to this playlist</p>
+      )}
+      {videos.slice(0, 4).map((video) => (
+        <BaseCard key={video._id} {...video}>
+          <CloseButton video={video} playlistId={_id} />
+        </BaseCard>
+      ))}
+    </div>
+  );
 }
 
 function PlaylistHeader({ name, _id, defaultPlaylist }) {
