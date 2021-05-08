@@ -1,0 +1,404 @@
+@import url("react-toastify/dist/ReactToastify.css");
+@import url("https://purvasheth.github.io/Ceres-Component-Lib/lib/styles.css");
+@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+
+
+:root {
+  --primary: #6d28d9;
+  --secondary: #DDD6FE;
+  --red-600: #DC2626;
+  --grey-300: #D1D5DB;
+  --grey-500: #6B7280;
+  --grey-600: #4B5563;
+  --green-600: #059669;
+  --red-100: #FEE2E2;
+  --green-100: #D1FAE5;
+  --min-width: 250px;
+
+}
+
+/**************** utility classses ******************/
+.flex-no-wrap {
+  flex-wrap: nowrap;
+}
+
+.container {
+  max-width: 1200px;
+  width: 90%;
+}
+
+.align-end {
+  align-self: flex-end;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-baseline {
+  align-items: baseline;
+}
+
+.w-250 {
+  min-width: var(--min-width)
+}
+
+.pl-4 {
+  padding-left: 4rem;
+}
+
+.m-sm {
+  margin: 0.5rem;
+}
+
+.width-full {
+  width: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.pt-sm {
+  padding-top: 0.5rem;
+}
+
+.pl-sm {
+  padding-left: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 3rem;
+}
+
+/***************** Thumnail img ***************/
+figure.fixedratio {
+  padding-top: 56.25%;
+  /* maintain 16:9 ratio */
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  width: 100%;
+}
+
+/***************** Iframe ***********************/
+.container--iframe {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+
+.iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/************ video listing **************/
+
+.card {
+  min-width: var(--min-width);
+  cursor: pointer;
+}
+
+.card__avatar {
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px var(--primary);
+  margin-right: 1rem;
+}
+
+.card__title {
+  font-weight: 700;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: min-content;
+}
+
+.card__author {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  height: min-content;
+}
+
+.btn--close--card {
+  font-size: 1.1rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.notes__icon,
+.card__icon,
+.playlist__icon {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.card__icon {
+  color: grey;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__icon:focus,
+.playlist__icon:focus,
+.playlist__icon:hover {
+  opacity: 1;
+  box-shadow: none;
+  background: var(--secondary);
+}
+
+.font--primary {
+  color: var(--primary);
+}
+
+.input {
+  width: 80%;
+}
+
+/****************** playlists ****************/
+
+.playlist__header {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name--regular {
+  outline: none;
+  border: none;
+  font-size: 1.4rem;
+  padding: 0.25em;
+  width: 60%;
+  color: black;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+.name--regular:disabled {
+  background-color: white;
+}
+
+.name--editable {
+  border: 1px solid var(--grey-300);
+  outline: 1px solid var(--grey-300);
+  color: var(--grey-500);
+}
+
+/**************** button variants ******************/
+.btn--warning {
+  color: var(--red-600);
+}
+
+.btn--warning:hover,
+.btn--warning:focus {
+  background: var(--red-100);
+}
+
+.btn--success {
+  color: var(--green-600);
+}
+
+.btn--success:hover,
+.btn--success:focus {
+  background: var(--green-100);
+}
+
+/********************** navigation **************/
+
+.nav__link {
+  cursor: pointer;
+}
+
+.nav__searchbar {
+  margin-right: 0;
+}
+
+.header .container {
+  padding: 0;
+}
+
+
+.nav__link--active {
+  font-weight: 900;
+  border-bottom: none;
+}
+
+.navigation {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.logo {
+  padding: 0.5rem;
+  margin: 0;
+  height: 3rem;
+  width: auto;
+}
+
+.nav__item {
+  padding-top: 0;
+  padding-bottom: 1em;
+}
+
+.position-badge--smaller {
+  position: absolute;
+  font-size: 0.7rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  top: 0.25rem;
+  right: -1rem;
+}
+
+@media (min-width:700px) {
+  .nav__item {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .nav__list--primary {
+    padding-bottom: 0;
+  }
+
+  .nav__search-bar {
+    margin-right: 1rem;
+  }
+
+  .position-badge--smaller {
+    top: 0.25rem;
+    right: 0rem;
+  }
+}
+
+/*************************** video details ***************/
+.container--video {
+  max-width: 768px;
+  width: 100%;
+  margin: auto;
+}
+
+.video__title {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: min-content;
+  padding: 0 1rem;
+}
+
+.video__info {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid var(--grey-300);
+  border-bottom: 2px solid var(--grey-300);
+}
+
+.video__notes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 350px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+.ta--notes {
+  border: 1px solid var(--grey-300);
+  flex-grow: 1;
+  width: 100%;
+  text-align: left;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.react-markdown {
+  border: 1px solid var(--grey-300);
+  flex-grow: 1;
+  width: 100%;
+  padding: 0 2rem;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/******************** spinner *********************/
+.spinner--large {
+  font-size: 3rem;
+}
+
+/******************* toasts ***********************/
+
+.Toastify__close-button {
+  color: var(--grey-600);
+}
+
+.Toastify__close-button:hover,
+.Toastify__close-button:focus {
+  color: var(--text-primary);
+}
+
+/***************** playlist modal ********************/
+.playlist-modal__title {
+  margin-block-start: 0;
+  margin-block-end: 0.25rem;
+}
+
+.list__item {
+  padding: 0.5rem;
+}
+
+/****************** media query *********************/
+
+@media (max-width:600px) {
+  .video__title {
+    font-size: 1rem;
+  }
+
+  .video__notes h2 {
+    font-size: 1rem;
+  }
+}
